@@ -14,13 +14,13 @@ class TelaPrincipal(QWidget):
 
     def configurar_janela(self):
 
-        self.setWindowTitle("Escala da Portaria")
+        self.setWindowTitle("Escala do Estacionamento")
 
         self.resize(900, 600)
 
         layout = QVBoxLayout()
 
-        titulo = QLabel("ESCALA DA PORTARIA")
+        titulo = QLabel("ESCALA DO ESTACIONAMENTO")
 
         layout.addWidget(titulo)
 
