@@ -1,3 +1,4 @@
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QWidget,
     QLabel,
@@ -26,6 +27,7 @@ class TelaPrincipal(QWidget):
     def criar_componentes(self):
 
         self.lbl_titulo = QLabel("ESCALA DO ESTACIONAMENTO")
+        self.lbl_titulo.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.combo_mes = QComboBox()
         self.combo_mes.addItems([
