@@ -48,6 +48,15 @@ class TelaPrincipal(QWidget):
         self.btn_pdf = QPushButton("Gerar PDF")
 
         self.tabela = QTableWidget()
+        self.tabela.setColumnCount(3)
+        self.tabela.setHorizontalHeaderLabels([
+            "Dia",
+            "Culto",
+            "Obreiro"
+        ])
+
+        self.tabela.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        
 
     def criar_layout(self):
 
