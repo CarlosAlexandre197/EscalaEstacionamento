@@ -1,7 +1,12 @@
 from PyQt6.QtWidgets import (
     QWidget,
     QLabel,
-    QVBoxLayout
+    QVBoxLayout,
+    QHBoxLayout,
+    QPushButton,
+    QComboBox,
+    QTableWidget,
+    QHeaderView
 )
 
 
@@ -11,17 +16,54 @@ class TelaPrincipal(QWidget):
         super().__init__()
 
         self.configurar_janela()
+        self.criar_componentes()
+        self.criar_layout()
 
     def configurar_janela(self):
-
         self.setWindowTitle("Escala do Estacionamento")
+        self.resize(1000, 650)
 
-        self.resize(900, 600)
+    def criar_componentes(self):
 
-        layout = QVBoxLayout()
+        self.lbl_titulo = QLabel("ESCALA DO ESTACIONAMENTO")
 
-        titulo = QLabel("ESCALA DO ESTACIONAMENTO")
+        self.combo_mes = QComboBox()
+        self.combo_mes.addItems([
+            "Janeiro",
+            "Fevereiro",
+            "Março",
+            "Abril",
+            "Maio",
+            "Junho",
+            "Julho",
+            "Agosto",
+            "Setembro",
+            "Outubro",
+            "Novembro",
+            "Dezembro"
+        ])
 
-        layout.addWidget(titulo)
+        self.btn_obreiros = QPushButton("Obreiros")
+        self.btn_salvar = QPushButton("Salvar")
+        self.btn_pdf = QPushButton("Gerar PDF")
 
-        self.setLayout(layout)
+        self.tabela = QTableWidget()
+
+    def criar_layout(self):
+
+        layout_principal = QVBoxLayout()
+
+        layout_principal.addWidget(self.lbl_titulo)
+        layout_principal.addWidget(self.combo_mes)
+
+        layout_botoes = QHBoxLayout()
+
+        layout_botoes.addWidget(self.btn_obreiros)
+        layout_botoes.addWidget(self.btn_salvar)
+        layout_botoes.addWidget(self.btn_pdf)
+
+        layout_principal.addLayout(layout_botoes)
+
+        layout_principal.addWidget(self.tabela)
+
+        self.setLayout(layout_principal)
