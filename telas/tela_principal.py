@@ -1,3 +1,4 @@
+from PyQt6.QtWidgets import QSpinBox
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QWidget,
@@ -25,6 +26,11 @@ class TelaPrincipal(QWidget):
         self.resize(1000, 650)
 
     def criar_componentes(self):
+
+        self.spin_ano = QSpinBox()
+        self.spin_ano.setMinimum(2025)
+        self.spin_ano.setMaximum(2100)
+        self.spin_ano.setValue(2026)
 
         self.lbl_titulo = QLabel("ESCALA DO ESTACIONAMENTO")
         self.lbl_titulo.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -57,16 +63,29 @@ class TelaPrincipal(QWidget):
             "Obreiro"
         ])
 
-        self.tabela.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        self.tabela.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch
+        )
         
-
+        
     def criar_layout(self):
 
         layout_principal = QVBoxLayout()
 
         layout_principal.addWidget(self.lbl_titulo)
-        layout_principal.addWidget(self.combo_mes)
 
+        # Layout do mês e ano
+        layout_data = QHBoxLayout()
+
+        layout_data.addWidget(QLabel("Mês:"))
+        layout_data.addWidget(self.combo_mes)
+
+        layout_data.addWidget(QLabel("Ano:"))
+        layout_data.addWidget(self.spin_ano)
+
+        layout_principal.addLayout(layout_data)
+
+        # Layout dos botões
         layout_botoes = QHBoxLayout()
 
         layout_botoes.addWidget(self.btn_obreiros)
