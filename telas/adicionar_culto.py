@@ -28,10 +28,15 @@ class AdicionarCulto(QDialog):
 
         self.combo_dia = QComboBox()
         self.combo_dia.addItems([
-            "Domingo",
-            "Quarta",
-            "Sexta",
-            "Sábado"
+            self.combo_dia.addItems([
+                "Domingo",
+                "Segunda",
+                "Terça",
+                "Quarta",
+                "Quinta",
+                "Sexta",
+                "Sábado"
+            ])
         ])
 
         self.lbl_culto = QLabel("Nome do culto")
