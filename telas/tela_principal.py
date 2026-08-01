@@ -78,9 +78,8 @@ class TelaPrincipal(QWidget):
         dados = [
             ["Domingo", "Escola Bíblica", ""],
             ["Domingo", "Culto da Família", ""],
-            ["Quarta", "Culto de Doutrina e Causas Impossíveis", ""],
-            ["Sexta", "", ""],
-            ["Sábado", "", ""]
+            ["Quarta", "Culto de Doutrina e Causas Impossíveis", ""]
+            
         ]
 
         self.tabela.setRowCount(len(dados)) 
