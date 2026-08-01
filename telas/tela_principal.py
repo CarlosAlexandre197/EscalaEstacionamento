@@ -57,6 +57,8 @@ class TelaPrincipal(QWidget):
         self.btn_obreiros = QPushButton("Obreiros")
         self.btn_salvar = QPushButton("Salvar")
         self.btn_pdf = QPushButton("Gerar PDF")
+        self.btn_adicionar = QPushButton("+ Adicionar Culto")
+        self.btn_remover = QPushButton("- Remover Culto")
 
         self.tabela = QTableWidget()
         self.tabela.setColumnCount(3)
@@ -121,5 +123,11 @@ class TelaPrincipal(QWidget):
         layout_principal.addLayout(layout_botoes)
 
         layout_principal.addWidget(self.tabela)
+        layout_cultos = QHBoxLayout()
+
+        layout_cultos.addWidget(self.btn_adicionar)
+        layout_cultos.addWidget(self.btn_remover)
+
+        layout_principal.addLayout(layout_cultos)
 
         self.setLayout(layout_principal)
