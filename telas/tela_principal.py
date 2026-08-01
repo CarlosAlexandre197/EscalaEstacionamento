@@ -22,6 +22,7 @@ class TelaPrincipal(QWidget):
         self.configurar_janela()
         self.criar_componentes()
         self.criar_layout()
+        self.criar_conexoes()
         self.preencher_tabela()
 
     def configurar_janela(self):
@@ -131,3 +132,14 @@ class TelaPrincipal(QWidget):
         layout_principal.addLayout(layout_cultos)
 
         self.setLayout(layout_principal)
+        
+    def criar_conexoes(self):
+
+        self.btn_adicionar.clicked.connect(self.adicionar_culto)
+        self.btn_remover.clicked.connect(self.remover_culto)
+        
+    def adicionar_culto(self):
+        print("Adicionar culto")
+
+    def remover_culto(self):
+        print("Remover culto")
