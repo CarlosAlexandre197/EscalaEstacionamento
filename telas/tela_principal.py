@@ -1,14 +1,16 @@
 from PyQt6.QtWidgets import QSpinBox
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
-    QWidget,
+     QWidget,
     QLabel,
     QVBoxLayout,
     QHBoxLayout,
     QPushButton,
     QComboBox,
     QTableWidget,
-    QHeaderView
+    QTableWidgetItem,
+    QHeaderView,
+    QSpinBoxt
 )
 
 
@@ -20,6 +22,7 @@ class TelaPrincipal(QWidget):
         self.configurar_janela()
         self.criar_componentes()
         self.criar_layout()
+        self.preencher_tabela()
 
     def configurar_janela(self):
         self.setWindowTitle("Escala do Estacionamento")
@@ -66,8 +69,31 @@ class TelaPrincipal(QWidget):
         self.tabela.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.Stretch
         )
+    
+    def preencher_tabela(self):
+
+        dados = [
+            ["Domingo", "Escola Bíblica", ""],
+            ["Domingo", "Culto da Família", ""],
+            ["Quarta", "Culto de Doutrina e Causas Impossíveis", ""],
+            ["Sexta", "", ""],
+            ["Sábado", "", ""]
+        ]
+
+        self.tabela.setRowCount(len(dados)) 
         
-        
+        for linha, dados_linha in enumerate(dados):
+
+            for coluna, valor in enumerate(dados_linha):
+
+                item = QTableWidgetItem(valor)
+
+                self.tabela.setItem(
+                    linha,
+                    coluna,
+                    item
+                )   
+            
     def criar_layout(self):
 
         layout_principal = QVBoxLayout()
