@@ -10,7 +10,7 @@ from PyQt6.QtWidgets import (
     QTableWidget,
     QTableWidgetItem,
     QHeaderView,
-    QSpinBoxt
+    QSpinBox
 )
 
 
