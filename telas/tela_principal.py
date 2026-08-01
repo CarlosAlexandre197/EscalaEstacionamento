@@ -33,13 +33,25 @@ class TelaPrincipal(QWidget):
 
     def criar_componentes(self):
 
+        # ==========================================
+        # Ano
+        # ==========================================
+
         self.spin_ano = QSpinBox()
         self.spin_ano.setMinimum(2025)
         self.spin_ano.setMaximum(2100)
         self.spin_ano.setValue(2026)
 
+        # ==========================================
+        # Título
+        # ==========================================
+
         self.lbl_titulo = QLabel("ESCALA DO ESTACIONAMENTO")
         self.lbl_titulo.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        # ==========================================
+        # Mês
+        # ==========================================
 
         self.combo_mes = QComboBox()
         self.combo_mes.addItems([
@@ -57,20 +69,33 @@ class TelaPrincipal(QWidget):
             "Dezembro"
         ])
 
-        self.btn_obreiros = QPushButton("Obreiros")
-        self.btn_salvar = QPushButton("Salvar")
-        self.btn_pdf = QPushButton("Gerar PDF")
-        self.btn_adicionar = QPushButton("+ Adicionar Culto")
-        self.btn_remover = QPushButton("- Remover Culto")
+        # ==========================================
+        # Botões
+        # ==========================================
+
+        self.btn_obreiros = QPushButton("👥 Obreiros")
+        self.btn_salvar = QPushButton("💾 Salvar")
+        self.btn_pdf = QPushButton("📄 Gerar PDF")
+        self.btn_adicionar = QPushButton("➕ Adicionar Culto")
+        self.btn_remover = QPushButton("🗑 Remover Culto")
+
+        # Mesmo tamanho para todos os botões
+        for botao in (
+            self.btn_obreiros,
+            self.btn_salvar,
+            self.btn_pdf,
+            self.btn_adicionar,
+            self.btn_remover
+        ):
+            botao.setMinimumHeight(40)
+
+        # ==========================================
+        # Tabela
+        # ==========================================
 
         self.tabela = QTableWidget()
-        
-        self.tabela.setAlternatingRowColors(True)
-        self.tabela.verticalHeader().setVisible(False)
-        self.tabela.verticalHeader().setDefaultSectionSize(35)
-        self.tabela.setShowGrid(True)
         self.tabela.setColumnCount(3)
-        
+
         self.tabela.setHorizontalHeaderLabels([
             "Dia",
             "Culto",
@@ -81,18 +106,18 @@ class TelaPrincipal(QWidget):
             QHeaderView.ResizeMode.Stretch
         )
 
-        self.grupo_dados = QGroupBox("Dados da Escala")
-        self.grupo_escala = QGroupBox("Escala Mensal")
+        self.tabela.setAlternatingRowColors(True)
+        self.tabela.verticalHeader().setVisible(False)
+        self.tabela.verticalHeader().setDefaultSectionSize(35)
+        self.tabela.setShowGrid(True)
+
+        # ==========================================
+        # Grupos
+        # ==========================================
+
+        self.grupo_dados = QGroupBox("📅 Dados da Escala")
+        self.grupo_escala = QGroupBox("📋 Escala Mensal")
         
-        for botao in [
-            self.btn_obreiros,
-            self.btn_salvar,
-            self.btn_pdf,
-            self.btn_adicionar,
-            self.btn_remover
-        ]:
-            botao.setMinimumHeight(40)
-    
     def preencher_tabela(self):
 
         dados = [
