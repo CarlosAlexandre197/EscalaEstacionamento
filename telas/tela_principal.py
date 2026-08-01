@@ -64,7 +64,13 @@ class TelaPrincipal(QWidget):
         self.btn_remover = QPushButton("- Remover Culto")
 
         self.tabela = QTableWidget()
+        
+        self.tabela.setAlternatingRowColors(True)
+        self.tabela.verticalHeader().setVisible(False)
+        self.tabela.verticalHeader().setDefaultSectionSize(35)
+        self.tabela.setShowGrid(True)
         self.tabela.setColumnCount(3)
+        
         self.tabela.setHorizontalHeaderLabels([
             "Dia",
             "Culto",
@@ -74,6 +80,18 @@ class TelaPrincipal(QWidget):
         self.tabela.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.Stretch
         )
+
+        self.grupo_dados = QGroupBox("Dados da Escala")
+        self.grupo_escala = QGroupBox("Escala Mensal")
+        
+        for botao in [
+            self.btn_obreiros,
+            self.btn_salvar,
+            self.btn_pdf,
+            self.btn_adicionar,
+            self.btn_remover
+        ]:
+            botao.setMinimumHeight(40)
     
     def preencher_tabela(self):
 
@@ -102,35 +120,61 @@ class TelaPrincipal(QWidget):
 
         layout_principal = QVBoxLayout()
 
+        # ==========================
+        # Título
+        # ==========================
         layout_principal.addWidget(self.lbl_titulo)
 
-        # Layout do mês e ano
+        # ==========================
+        # Grupo Dados
+        # ==========================
         layout_data = QHBoxLayout()
 
         layout_data.addWidget(QLabel("Mês:"))
         layout_data.addWidget(self.combo_mes)
 
+        layout_data.addSpacing(30)
+
         layout_data.addWidget(QLabel("Ano:"))
         layout_data.addWidget(self.spin_ano)
 
-        layout_principal.addLayout(layout_data)
+        layout_data.addStretch()
 
-        # Layout dos botões
-        layout_botoes = QHBoxLayout()
+        self.grupo_dados.setLayout(layout_data)
 
-        layout_botoes.addWidget(self.btn_obreiros)
-        layout_botoes.addWidget(self.btn_salvar)
-        layout_botoes.addWidget(self.btn_pdf)
+        layout_principal.addWidget(self.grupo_dados)
 
-        layout_principal.addLayout(layout_botoes)
+        # ==========================
+        # Grupo Escala
+        # ==========================
+        layout_tabela = QVBoxLayout()
 
-        layout_principal.addWidget(self.tabela)
+        layout_tabela.addWidget(self.tabela)
+
         layout_cultos = QHBoxLayout()
 
         layout_cultos.addWidget(self.btn_adicionar)
         layout_cultos.addWidget(self.btn_remover)
 
-        layout_principal.addLayout(layout_cultos)
+        layout_tabela.addLayout(layout_cultos)
+
+        self.grupo_escala.setLayout(layout_tabela)
+
+        layout_principal.addWidget(self.grupo_escala)
+
+        # ==========================
+        # Botões inferiores
+        # ==========================
+        layout_botoes = QHBoxLayout()
+
+        layout_botoes.addWidget(self.btn_obreiros)
+
+        layout_botoes.addStretch()
+
+        layout_botoes.addWidget(self.btn_salvar)
+        layout_botoes.addWidget(self.btn_pdf)
+
+        layout_principal.addLayout(layout_botoes)
 
         self.setLayout(layout_principal)
         
