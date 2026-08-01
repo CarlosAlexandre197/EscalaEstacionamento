@@ -1,3 +1,4 @@
+from telas.adicionar_culto import AdicionarCulto
 from PyQt6.QtWidgets import QSpinBox
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
@@ -138,7 +139,11 @@ class TelaPrincipal(QWidget):
         self.btn_remover.clicked.connect(self.remover_culto)
         
     def adicionar_culto(self):
-        print("Adicionar culto")
+    
+        janela = AdicionarCulto()
+        janela.exec()
 
     def remover_culto(self):
         print("Remover culto")
+        
+    
