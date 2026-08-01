@@ -2,16 +2,17 @@ from telas.adicionar_culto import AdicionarCulto
 from PyQt6.QtWidgets import QSpinBox
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
-     QWidget,
+    QWidget,
     QLabel,
-    QVBoxLayout,
-    QHBoxLayout,
     QPushButton,
     QComboBox,
     QTableWidget,
     QTableWidgetItem,
     QHeaderView,
-    QSpinBox
+    QSpinBox,
+    QVBoxLayout,
+    QHBoxLayout,
+    QGroupBox
 )
 
 
