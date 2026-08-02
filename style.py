@@ -2,17 +2,26 @@
 # JANELA
 # ==========================================
 
-JANELA = """
-QWidget {
-    background-color: #F4F6F9;
+TABELA = """
+QTableWidget {
+    background-color: white;
     color: #222222;
-    font-family: Segoe UI;
-    font-size: 11pt;
+    alternate-background-color: #F7F7F7;
+    border: 1px solid #D0D0D0;
+    gridline-color: #E0E0E0;
+    selection-background-color: #BBDEFB;
 }
 
-QLabel {
+QTableWidget::item {
     color: #222222;
-    background: transparent;
+}
+
+QHeaderView::section {
+    background-color: #1565C0;
+    color: white;
+    padding: 8px;
+    border: none;
+    font-weight: bold;
 }
 """
 # ==========================================
@@ -36,20 +45,20 @@ QLabel {
 
 GROUPBOX = """
 QGroupBox {
+    color: #1565C0;
     font-size: 14px;
     font-weight: bold;
-    color: #222222;
     border: 2px solid #D0D0D0;
     border-radius: 8px;
-    margin-top: 12px;
-    padding-top: 15px;
+    margin-top: 15px;
+    padding-top: 18px;
     background-color: white;
 }
 
 QGroupBox::title {
     subcontrol-origin: margin;
-    left: 12px;
-    padding: 0px 6px;
+    left: 15px;
+    padding: 0 6px;
     color: #1565C0;
     background-color: white;
 }
