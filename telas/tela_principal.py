@@ -34,6 +34,7 @@ class TelaPrincipal(QWidget):
         self.configurar_janela()
         self.criar_componentes()
         self.criar_layout()
+        self.aplicar_estilos()
         self.criar_conexoes()
         self.preencher_tabela()
 
