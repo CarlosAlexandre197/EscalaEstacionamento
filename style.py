@@ -5,11 +5,16 @@
 JANELA = """
 QWidget {
     background-color: #F4F6F9;
+    color: #222222;
     font-family: Segoe UI;
     font-size: 11pt;
 }
-"""
 
+QLabel {
+    color: #222222;
+    background: transparent;
+}
+"""
 # ==========================================
 # TÍTULO
 # ==========================================
