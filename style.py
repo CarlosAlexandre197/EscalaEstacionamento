@@ -1,93 +1,149 @@
-# ============================================
-# ESTILO GERAL DO PROGRAMA
-# ============================================
+# ==========================================
+# JANELA
+# ==========================================
 
 JANELA = """
-QWidget{
-    font-family: Segoe UI;
-    font-size: 10pt;
+QWidget {
     background-color: #F4F6F9;
+    font-family: Segoe UI;
+    font-size: 11pt;
 }
 """
 
+# ==========================================
+# TÍTULO
+# ==========================================
+
 TITULO = """
-QLabel{
+QLabel {
     background-color: #1565C0;
     color: white;
-    font-size: 20pt;
+    font-size: 24px;
     font-weight: bold;
     border-radius: 8px;
     padding: 12px;
 }
 """
 
+# ==========================================
+# GROUPBOX
+# ==========================================
+
+GROUPBOX = """
+QGroupBox {
+    font-size: 14px;
+    font-weight: bold;
+    color: #222222;
+    border: 2px solid #D0D0D0;
+    border-radius: 8px;
+    margin-top: 12px;
+    padding-top: 15px;
+    background-color: white;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 12px;
+    padding: 0px 6px;
+    color: #1565C0;
+    background-color: white;
+}
+"""
+
+# ==========================================
+# BOTÃO PRIMÁRIO
+# ==========================================
+
 BOTAO_PRIMARIO = """
-QPushButton{
+QPushButton {
     background-color: #1565C0;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     padding: 8px;
-    font-size: 10pt;
     font-weight: bold;
 }
 
-QPushButton:hover{
+QPushButton:hover {
     background-color: #1976D2;
 }
 
-QPushButton:pressed{
+QPushButton:pressed {
     background-color: #0D47A1;
 }
 """
 
+# ==========================================
+# BOTÃO SECUNDÁRIO
+# ==========================================
+
 BOTAO_SECUNDARIO = """
-QPushButton{
+QPushButton {
     background-color: #43A047;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     padding: 8px;
-    font-size: 10pt;
     font-weight: bold;
 }
 
-QPushButton:hover{
+QPushButton:hover {
     background-color: #4CAF50;
 }
-"""
 
-TABELA = """
-QTableWidget{
-    background: white;
-    border:1px solid #C7C7C7;
-    gridline-color:#E0E0E0;
-    selection-background-color:#BBDEFB;
-}
-
-QHeaderView::section{
-    background:#1565C0;
-    color:white;
-    padding:6px;
-    font-weight:bold;
-    border:none;
+QPushButton:pressed {
+    background-color: #2E7D32;
 }
 """
+
+# ==========================================
+# COMBOBOX
+# ==========================================
 
 COMBOBOX = """
-QComboBox{
-    background:white;
-    border:1px solid #BDBDBD;
-    border-radius:6px;
-    padding:5px;
+QComboBox {
+    background-color: white;
+    border: 1px solid #BDBDBD;
+    border-radius: 5px;
+    padding: 6px;
+}
+
+QComboBox::drop-down {
+    border: none;
 }
 """
 
+# ==========================================
+# SPINBOX
+# ==========================================
+
 SPINBOX = """
-QSpinBox{
-    background:white;
-    border:1px solid #BDBDBD;
-    border-radius:6px;
-    padding:5px;
+QSpinBox {
+    background-color: white;
+    border: 1px solid #BDBDBD;
+    border-radius: 5px;
+    padding: 6px;
+}
+"""
+
+# ==========================================
+# TABELA
+# ==========================================
+
+TABELA = """
+QTableWidget {
+    background-color: white;
+    alternate-background-color: #F7F7F7;
+    border: 1px solid #D0D0D0;
+    gridline-color: #E0E0E0;
+    selection-background-color: #BBDEFB;
+}
+
+QHeaderView::section {
+    background-color: #1565C0;
+    color: white;
+    padding: 8px;
+    border: none;
+    font-weight: bold;
 }
 """
