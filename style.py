@@ -2,26 +2,17 @@
 # JANELA
 # ==========================================
 
-TABELA = """
-QTableWidget {
-    background-color: white;
+JANELA = """
+QWidget {
+    background-color: #F4F6F9;
     color: #222222;
-    alternate-background-color: #F7F7F7;
-    border: 1px solid #D0D0D0;
-    gridline-color: #E0E0E0;
-    selection-background-color: #BBDEFB;
+    font-family: Segoe UI;
+    font-size: 11pt;
 }
 
-QTableWidget::item {
+QLabel {
     color: #222222;
-}
-
-QHeaderView::section {
-    background-color: #1565C0;
-    color: white;
-    padding: 8px;
-    border: none;
-    font-weight: bold;
+    background: transparent;
 }
 """
 # ==========================================
@@ -147,10 +138,15 @@ QSpinBox {
 TABELA = """
 QTableWidget {
     background-color: white;
+    color: #222222;
     alternate-background-color: #F7F7F7;
     border: 1px solid #D0D0D0;
     gridline-color: #E0E0E0;
     selection-background-color: #BBDEFB;
+}
+
+QTableWidget::item {
+    color: #222222;
 }
 
 QHeaderView::section {
