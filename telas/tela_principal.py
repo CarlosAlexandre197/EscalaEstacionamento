@@ -1,6 +1,7 @@
 from style import (
     JANELA,
     TITULO,
+    GROUPBOX,
     BOTAO_PRIMARIO,
     BOTAO_SECUNDARIO,
     TABELA,
@@ -248,6 +249,9 @@ class TelaPrincipal(QWidget):
         self.btn_obreiros.setStyleSheet(BOTAO_SECUNDARIO)
         self.btn_adicionar.setStyleSheet(BOTAO_SECUNDARIO)
         self.btn_remover.setStyleSheet(BOTAO_SECUNDARIO)
+        
+        self.grupo_dados.setStyleSheet(GROUPBOX)
+        self.grupo_escala.setStyleSheet(GROUPBOX)
         
     def criar_conexoes(self):
 
