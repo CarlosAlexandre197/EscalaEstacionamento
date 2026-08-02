@@ -1,3 +1,13 @@
+from style import (
+    JANELA,
+    TITULO,
+    BOTAO_PRIMARIO,
+    BOTAO_SECUNDARIO,
+    TABELA,
+    COMBOBOX,
+    SPINBOX
+)
+
 from telas.adicionar_culto import AdicionarCulto
 from PyQt6.QtWidgets import QSpinBox
 from PyQt6.QtCore import Qt
@@ -213,6 +223,30 @@ class TelaPrincipal(QWidget):
         layout_principal.addLayout(layout_botoes)
 
         self.setLayout(layout_principal)
+        
+    def aplicar_estilos(self):
+
+        # Estilo da janela
+        self.setStyleSheet(JANELA)
+
+        # Título
+        self.lbl_titulo.setStyleSheet(TITULO)
+
+        # Campos
+        self.combo_mes.setStyleSheet(COMBOBOX)
+        self.spin_ano.setStyleSheet(SPINBOX)
+
+        # Tabela
+        self.tabela.setStyleSheet(TABELA)
+
+        # Botões principais
+        self.btn_salvar.setStyleSheet(BOTAO_PRIMARIO)
+        self.btn_pdf.setStyleSheet(BOTAO_PRIMARIO)
+
+        # Botões secundários
+        self.btn_obreiros.setStyleSheet(BOTAO_SECUNDARIO)
+        self.btn_adicionar.setStyleSheet(BOTAO_SECUNDARIO)
+        self.btn_remover.setStyleSheet(BOTAO_SECUNDARIO)
         
     def criar_conexoes(self):
 
