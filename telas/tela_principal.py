@@ -143,53 +143,64 @@ class TelaPrincipal(QWidget):
             
     def criar_layout(self):
 
-        layout_principal = QVBoxLayout()
+        # ==========================================
+        # Layout Principal
+        # ==========================================
 
-        # ==========================
+        layout_principal = QVBoxLayout()
+        layout_principal.setSpacing(15)
+        layout_principal.setContentsMargins(20, 20, 20, 20)
+
+        # ==========================================
         # Título
-        # ==========================
+        # ==========================================
+
         layout_principal.addWidget(self.lbl_titulo)
 
-        # ==========================
-        # Grupo Dados
-        # ==========================
-        layout_data = QHBoxLayout()
+        # ==========================================
+        # Grupo Dados da Escala
+        # ==========================================
 
-        layout_data.addWidget(QLabel("Mês:"))
-        layout_data.addWidget(self.combo_mes)
+        layout_dados = QHBoxLayout()
 
-        layout_data.addSpacing(30)
+        layout_dados.addWidget(QLabel("Mês:"))
+        layout_dados.addWidget(self.combo_mes)
 
-        layout_data.addWidget(QLabel("Ano:"))
-        layout_data.addWidget(self.spin_ano)
+        layout_dados.addSpacing(30)
 
-        layout_data.addStretch()
+        layout_dados.addWidget(QLabel("Ano:"))
+        layout_dados.addWidget(self.spin_ano)
 
-        self.grupo_dados.setLayout(layout_data)
+        layout_dados.addStretch()
+
+        self.grupo_dados.setLayout(layout_dados)
 
         layout_principal.addWidget(self.grupo_dados)
 
-        # ==========================
+        # ==========================================
         # Grupo Escala
-        # ==========================
-        layout_tabela = QVBoxLayout()
+        # ==========================================
 
-        layout_tabela.addWidget(self.tabela)
+        layout_escala = QVBoxLayout()
+
+        layout_escala.addWidget(self.tabela)
 
         layout_cultos = QHBoxLayout()
 
         layout_cultos.addWidget(self.btn_adicionar)
         layout_cultos.addWidget(self.btn_remover)
+        layout_cultos.addStretch()
 
-        layout_tabela.addLayout(layout_cultos)
+        layout_escala.addLayout(layout_cultos)
 
-        self.grupo_escala.setLayout(layout_tabela)
+        self.grupo_escala.setLayout(layout_escala)
 
         layout_principal.addWidget(self.grupo_escala)
 
-        # ==========================
-        # Botões inferiores
-        # ==========================
+        # ==========================================
+        # Botões Inferiores
+        # ==========================================
+
         layout_botoes = QHBoxLayout()
 
         layout_botoes.addWidget(self.btn_obreiros)
