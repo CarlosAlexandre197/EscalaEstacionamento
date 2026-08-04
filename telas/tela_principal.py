@@ -274,7 +274,7 @@ class TelaPrincipal(QWidget):
 
     def abrir_cadastro_obreiros(self):
 
-        janela = CadastroObreiros()
+        janela = CadastroObreiros(self.banco)
         janela.exec()
         
     
