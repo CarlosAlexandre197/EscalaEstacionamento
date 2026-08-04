@@ -14,7 +14,7 @@ def main():
     banco = Banco()
 
     # Abre a janela principal
-    janela = TelaPrincipal()
+    janela = TelaPrincipal(banco)
     janela.show()
 
     sys.exit(app.exec())
