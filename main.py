@@ -1,15 +1,19 @@
-from database import Banco
-
 import sys
 
 from PyQt6.QtWidgets import QApplication
 
+from database import Banco
 from telas.tela_principal import TelaPrincipal
 
 
 def main():
+
     app = QApplication(sys.argv)
 
+    # Inicializa o banco de dados
+    banco = Banco()
+
+    # Abre a janela principal
     janela = TelaPrincipal()
     janela.show()
 
