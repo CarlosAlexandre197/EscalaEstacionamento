@@ -23,6 +23,7 @@ class CadastroObreiros(QDialog):
         self.criar_componentes()
         self.criar_layout()
         self.criar_conexoes()
+        self.carregar_obreiros()
 
     def criar_componentes(self):
 
@@ -63,6 +64,15 @@ class CadastroObreiros(QDialog):
         self.btn_editar.clicked.connect(self.editar_obreiro)
         self.btn_excluir.clicked.connect(self.excluir_obreiro)
         self.btn_fechar.clicked.connect(self.close)
+        
+    def carregar_obreiros(self):
+
+        self.lista_obreiros.clear()
+
+        obreiros = self.banco.listar_obreiros()
+
+        for id_obreiro, nome in obreiros:
+            self.lista_obreiros.addItem(nome)
 
     def adicionar_obreiro(self):
 
@@ -76,8 +86,21 @@ class CadastroObreiros(QDialog):
             )
             return
 
-        self.lista_obreiros.addItem(nome)
-        self.txt_nome.clear()
+        try:
+
+            self.banco.salvar_obreiro(nome)
+
+            self.txt_nome.clear()
+
+            self.carregar_obreiros()
+
+        except Exception as erro:
+
+            QMessageBox.warning(
+                self,
+                "Erro",
+                str(erro)
+            )
 
     def editar_obreiro(self):
 
