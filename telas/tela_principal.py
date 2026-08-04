@@ -269,5 +269,10 @@ self.btn_obreiros.clicked.connect(self.abrir_cadastro_obreiros)
 
     def remover_culto(self):
         print("Remover culto")
+
+    def abrir_cadastro_obreiros(self):
+
+        janela = CadastroObreiros()
+        janela.exec()
         
     
