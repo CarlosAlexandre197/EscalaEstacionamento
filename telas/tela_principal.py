@@ -259,6 +259,8 @@ class TelaPrincipal(QWidget):
 
         self.btn_adicionar.clicked.connect(self.adicionar_culto)
         self.btn_remover.clicked.connect(self.remover_culto)
+
+self.btn_obreiros.clicked.connect(self.abrir_cadastro_obreiros)
         
     def adicionar_culto(self):
     
