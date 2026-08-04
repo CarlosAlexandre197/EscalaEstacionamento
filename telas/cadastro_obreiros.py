@@ -12,8 +12,10 @@ from PyQt6.QtWidgets import (
 
 class CadastroObreiros(QDialog):
 
-    def __init__(self):
+    def __init__(self, banco):
         super().__init__()
+
+        self.banco = banco
 
         self.setWindowTitle("Cadastro de Obreiros")
         self.resize(450, 500)
