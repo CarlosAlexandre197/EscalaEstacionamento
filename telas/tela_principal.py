@@ -12,7 +12,6 @@ from style import (
 )
 
 from telas.adicionar_culto import AdicionarCulto
-from PyQt6.QtWidgets import QSpinBox
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QWidget,
