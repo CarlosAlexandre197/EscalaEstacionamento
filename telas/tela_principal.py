@@ -1,3 +1,5 @@
+from telas.cadastro_obreiros import CadastroObreiros
+
 from style import (
     JANELA,
     TITULO,
