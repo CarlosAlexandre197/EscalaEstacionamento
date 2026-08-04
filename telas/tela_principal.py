@@ -31,8 +31,10 @@ from PyQt6.QtWidgets import (
 
 class TelaPrincipal(QWidget):
 
-    def __init__(self):
+    def __init__(self, banco):
         super().__init__()
+        
+        self.banco = banco
 
         self.configurar_janela()
         self.criar_componentes()
