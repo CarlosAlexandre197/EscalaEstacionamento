@@ -67,22 +67,22 @@ class CadastroObreiros(QDialog):
         
     def carregar_obreiros(self):
 
-    self.lista_obreiros.clear()
+        self.lista_obreiros.clear()
 
-    obreiros = self.banco.listar_obreiros()
+        obreiros = self.banco.listar_obreiros()
 
-    for id_obreiro, nome in obreiros:
+        for id_obreiro, nome in obreiros:
 
-        self.lista_obreiros.addItem(nome)
+            self.lista_obreiros.addItem(nome)
 
-        item = self.lista_obreiros.item(
-            self.lista_obreiros.count() - 1
-        )
+            item = self.lista_obreiros.item(
+                self.lista_obreiros.count() - 1
+            )
 
-        item.setData(
-            256,  # Qt.ItemDataRole.UserRole
-            id_obreiro
-        )
+            item.setData(
+                256,  # Qt.ItemDataRole.UserRole
+                id_obreiro
+            )
 
         def adicionar_obreiro(self):
 
@@ -101,73 +101,73 @@ class CadastroObreiros(QDialog):
 
     def editar_obreiro(self):
 
-    item = self.lista_obreiros.currentItem()
+        item = self.lista_obreiros.currentItem()
 
-    if item is None:
+        if item is None:
 
-        QMessageBox.warning(
-            self,
-            "Atenção",
-            "Selecione um obreiro."
-        )
-        return
+            QMessageBox.warning(
+                self,
+                "Atenção",
+                "Selecione um obreiro."
+            )
+            return
 
-    novo_nome = self.txt_nome.text().strip()
+        novo_nome = self.txt_nome.text().strip()
 
-    if not novo_nome:
+        if not novo_nome:
 
-        QMessageBox.warning(
-            self,
-            "Atenção",
-            "Digite o novo nome."
-        )
-        return
+            QMessageBox.warning(
+                self,
+                "Atenção",
+                "Digite o novo nome."
+            )
+            return
 
-    id_obreiro = item.data(256)
+        id_obreiro = item.data(256)
 
-    try:
+        try:
 
-        self.banco.editar_obreiro(
-            id_obreiro,
-            novo_nome
-        )
+            self.banco.editar_obreiro(
+                id_obreiro,
+                novo_nome
+            )
 
-        self.carregar_obreiros()
+            self.carregar_obreiros()
 
-        self.txt_nome.clear()
+            self.txt_nome.clear()
 
-    except Exception as erro:
+        except Exception as erro:
 
-        QMessageBox.warning(
-            self,
-            "Erro",
-            str(erro)
-        )
+            QMessageBox.warning(
+                self,
+                "Erro",
+                str(erro)
+            )
 
     def excluir_obreiro(self):
 
-    item = self.lista_obreiros.currentItem()
+        item = self.lista_obreiros.currentItem()
 
-    if item is None:
+        if item is None:
 
-        QMessageBox.warning(
+            QMessageBox.warning(
+                self,
+                "Atenção",
+                "Selecione um obreiro."
+            )
+            return
+
+        resposta = QMessageBox.question(
             self,
-            "Atenção",
-            "Selecione um obreiro."
+            "Excluir",
+            "Deseja realmente excluir este obreiro?"
         )
-        return
 
-    resposta = QMessageBox.question(
-        self,
-        "Excluir",
-        "Deseja realmente excluir este obreiro?"
-    )
+        if resposta != QMessageBox.StandardButton.Yes:
+            return
 
-    if resposta != QMessageBox.StandardButton.Yes:
-        return
+        id_obreiro = item.data(256)
 
-    id_obreiro = item.data(256)
+        self.banco.excluir_obreiro(id_obreiro)
 
-    self.banco.excluir_obreiro(id_obreiro)
-
-    self.carregar_obreiros()
+        self.carregar_obreiros()
