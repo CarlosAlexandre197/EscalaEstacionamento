@@ -64,6 +64,8 @@ class CadastroObreiros(QDialog):
         self.btn_editar.clicked.connect(self.editar_obreiro)
         self.btn_excluir.clicked.connect(self.excluir_obreiro)
         self.btn_fechar.clicked.connect(self.close)
+
+self.lista_obreiros.itemClicked.connect(self.selecionar_obreiro)
         
     def carregar_obreiros(self):
 
@@ -171,3 +173,7 @@ class CadastroObreiros(QDialog):
         self.banco.excluir_obreiro(id_obreiro)
 
         self.carregar_obreiros()
+
+   def selecionar_obreiro(self, item):
+
+    self.txt_nome.setText(item.text())
