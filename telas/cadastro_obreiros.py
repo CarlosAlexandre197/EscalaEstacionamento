@@ -3,7 +3,9 @@ from PyQt6.QtWidgets import (
     QLabel,
     QLineEdit,
     QPushButton,
-    QListWidget,
+    QTableWidget,
+    QTableWidgetItem,
+    QHeaderView,
     QVBoxLayout,
     QHBoxLayout,
     QMessageBox
@@ -36,7 +38,28 @@ class CadastroObreiros(QDialog):
         self.btn_excluir = QPushButton("Excluir")
         self.btn_fechar = QPushButton("Fechar")
 
-        self.lista_obreiros = QListWidget()
+        self.tabela_obreiros = QTableWidget()
+
+self.tabela_obreiros.setColumnCount(2)
+
+self.tabela_obreiros.setHorizontalHeaderLabels([
+    "ID",
+    "Nome"
+])
+
+self.tabela_obreiros.horizontalHeader().setSectionResizeMode(
+    QHeaderView.ResizeMode.Stretch
+)
+
+self.tabela_obreiros.setSelectionBehavior(
+    QTableWidget.SelectionBehavior.SelectRows
+)
+
+self.tabela_obreiros.setEditTriggers(
+    QTableWidget.EditTrigger.NoEditTriggers
+)
+
+self.tabela_obreiros.verticalHeader().setVisible(False)
 
     def criar_layout(self):
 
@@ -52,7 +75,7 @@ class CadastroObreiros(QDialog):
 
         layout_principal.addLayout(layout_botoes)
 
-        layout_principal.addWidget(self.lista_obreiros)
+        layout_principal.addWidget(self.tabela_obreiros)
 
         layout_principal.addWidget(self.btn_fechar)
 
