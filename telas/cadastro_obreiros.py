@@ -84,7 +84,7 @@ class CadastroObreiros(QDialog):
                 id_obreiro
             )
 
-        def adicionar_obreiro(self):
+    def adicionar_obreiro(self):
 
             nome = self.txt_nome.text().strip()
 
