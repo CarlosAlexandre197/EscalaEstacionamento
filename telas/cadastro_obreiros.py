@@ -202,3 +202,16 @@ self.lista_obreiros.itemClicked.connect(self.selecionar_obreiro)
 
         self.carregar_obreiros()
         self.txt_nome.clear()
+
+    def selecionar_obreiro(self):
+
+    linha = self.tabela_obreiros.currentRow()
+
+    if linha >= 0:
+
+        nome = self.tabela_obreiros.item(
+            linha,
+            1
+        ).text()
+
+        self.txt_nome.setText(nome)
