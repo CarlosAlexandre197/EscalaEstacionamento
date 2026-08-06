@@ -103,16 +103,17 @@ class TelaPrincipal(QWidget):
             self.btn_adicionar,
             self.btn_remover
         ):
-            botao.setMinimumHeight(40)
+            botao.setMinimumHeight(4)
 
         # ==========================================
         # Tabela
         # ==========================================
 
         self.tabela = QTableWidget()
-        self.tabela.setColumnCount(3)
+        self.tabela.setColumnCount(4)
 
         self.tabela.setHorizontalHeaderLabels([
+            "Data",
             "Dia",
             "Culto",
             "Obreiro"
