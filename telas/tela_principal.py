@@ -135,41 +135,41 @@ class TelaPrincipal(QWidget):
         
     def preencher_tabela(self):
 
-    dados = [
-        ["Domingo", "Escola Bíblica"],
-        ["Domingo", "Culto da Família"],
-        ["Quarta", "Culto de Doutrina e Causas Impossíveis"]
-    ]
+        dados = [
+            ["Domingo", "Escola Bíblica"],
+            ["Domingo", "Culto da Família"],
+            ["Quarta", "Culto de Doutrina e Causas Impossíveis"]
+        ]
 
-    self.tabela.setRowCount(len(dados))
+        self.tabela.setRowCount(len(dados))
 
-    obreiros = self.obter_nomes_obreiros()
+        obreiros = self.obter_nomes_obreiros()
 
-    for linha, (dia, culto) in enumerate(dados):
+        for linha, (dia, culto) in enumerate(dados):
 
-        self.tabela.setItem(
-            linha,
-            0,
-            QTableWidgetItem(dia)
-        )
+            self.tabela.setItem(
+                linha,
+                0,
+                QTableWidgetItem(dia)
+            )
 
-        self.tabela.setItem(
-            linha,
-            1,
-            QTableWidgetItem(culto)
-        )
+            self.tabela.setItem(
+                linha,
+                1,
+                QTableWidgetItem(culto)
+            )
 
-        combo = QComboBox()
-        combo.addItem("Selecione...")
+            combo = QComboBox()
+            combo.addItem("Selecione...")
 
-        for nome in obreiros:
-            combo.addItem(nome)
+            for nome in obreiros:
+                combo.addItem(nome)
 
-        self.tabela.setCellWidget(
-            linha,
-            2,
-            combo
-        )   
+            self.tabela.setCellWidget(
+                linha,
+                2,
+                combo
+            )   
             
     def criar_layout(self):
 
@@ -293,7 +293,7 @@ class TelaPrincipal(QWidget):
         
     def obter_nomes_obreiros(self):
 
-    obreiros = self.banco.listar_obreiros()
+        obreiros = self.banco.listar_obreiros()
 
-    return [nome for _, nome in obreiros]
+        return [nome for _, nome in obreiros]
     
