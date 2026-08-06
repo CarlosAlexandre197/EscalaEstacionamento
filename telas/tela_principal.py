@@ -135,26 +135,41 @@ class TelaPrincipal(QWidget):
         
     def preencher_tabela(self):
 
-        dados = [
-            ["Domingo", "Escola Bíblica", ""],
-            ["Domingo", "Culto da Família", ""],
-            ["Quarta", "Culto de Doutrina e Causas Impossíveis", ""]
-            
-        ]
+    dados = [
+        ["Domingo", "Escola Bíblica"],
+        ["Domingo", "Culto da Família"],
+        ["Quarta", "Culto de Doutrina e Causas Impossíveis"]
+    ]
 
-        self.tabela.setRowCount(len(dados)) 
-        
-        for linha, dados_linha in enumerate(dados):
+    self.tabela.setRowCount(len(dados))
 
-            for coluna, valor in enumerate(dados_linha):
+    obreiros = self.obter_nomes_obreiros()
 
-                item = QTableWidgetItem(valor)
+    for linha, (dia, culto) in enumerate(dados):
 
-                self.tabela.setItem(
-                    linha,
-                    coluna,
-                    item
-                )   
+        self.tabela.setItem(
+            linha,
+            0,
+            QTableWidgetItem(dia)
+        )
+
+        self.tabela.setItem(
+            linha,
+            1,
+            QTableWidgetItem(culto)
+        )
+
+        combo = QComboBox()
+        combo.addItem("Selecione...")
+
+        for nome in obreiros:
+            combo.addItem(nome)
+
+        self.tabela.setCellWidget(
+            linha,
+            2,
+            combo
+        )   
             
     def criar_layout(self):
 
