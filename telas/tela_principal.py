@@ -1,3 +1,4 @@
+from datas import obter_datas
 from telas.cadastro_obreiros import CadastroObreiros
 
 from style import (
@@ -137,41 +138,89 @@ class TelaPrincipal(QWidget):
         
     def preencher_tabela(self):
 
-        dados = [
-            ["Domingo", "Escola Bíblica"],
-            ["Domingo", "Culto da Família"],
-            ["Quarta", "Culto de Doutrina e Causas Impossíveis"]
-        ]
+    # Cultos fixos
+    cultos = [
+        ("Domingo", "Escola Bíblica"),
+        ("Domingo", "Culto da Família"),
+        ("Quarta", "Culto de Doutrina e Causas Impossíveis")
+    ]
 
-        self.tabela.setRowCount(len(dados))
+    # Pega o mês selecionado no QComboBox
+    mes = self.combo_mes.currentIndex() + 1
 
-        obreiros = self.obter_nomes_obreiros()
+    # Pega o ano selecionado
+    ano = self.spin_ano.value()
 
-        for linha, (dia, culto) in enumerate(dados):
+    # Busca os obreiros cadastrados
+    obreiros = self.obter_nomes_obreiros()
 
-            self.tabela.setItem(
-                linha,
-                0,
-                QTableWidgetItem(dia)
+    # Limpa a tabela
+    self.tabela.setRowCount(0)
+
+    linhas = []
+
+    # Gera todas as datas dos cultos
+    for dia_semana, culto in cultos:
+
+        datas = obter_datas(
+            dia_semana,
+            mes,
+            ano
+        )
+
+        for data in datas:
+
+            linhas.append(
+                (data, dia_semana, culto)
             )
 
-            self.tabela.setItem(
-                linha,
-                1,
-                QTableWidgetItem(culto)
-            )
+    # Ordena pela data
+    linhas.sort(
+        key=lambda linha: (
+            int(linha[0][6:10]),
+            int(linha[0][3:5]),
+            int(linha[0][0:2])
+        )
+    )
 
-            combo = QComboBox()
-            combo.addItem("Selecione...")
+    # Preenche a tabela
+    for data, dia_semana, culto in linhas:
 
-            for nome in obreiros:
-                combo.addItem(nome)
+        linha = self.tabela.rowCount()
 
-            self.tabela.setCellWidget(
-                linha,
-                2,
-                combo
-            )   
+        self.tabela.insertRow(linha)
+
+        self.tabela.setItem(
+            linha,
+            0,
+            QTableWidgetItem(data)
+        )
+
+        self.tabela.setItem(
+            linha,
+            1,
+            QTableWidgetItem(dia_semana)
+        )
+
+        self.tabela.setItem(
+            linha,
+            2,
+            QTableWidgetItem(culto)
+        )
+
+        # ComboBox dos obreiros
+        combo_obreiro = QComboBox()
+
+        combo_obreiro.addItem("Selecione...")
+
+        for nome in obreiros:
+            combo_obreiro.addItem(nome)
+
+        self.tabela.setCellWidget(
+            linha,
+            3,
+            combo_obreiro
+        )   
             
     def criar_layout(self):
 
@@ -281,6 +330,14 @@ class TelaPrincipal(QWidget):
         self.btn_obreiros.clicked.connect(self.abrir_cadastro_obreiros)
         
         self.btn_salvar.clicked.connect(self.salvar_escala)
+
+self.combo_mes.currentIndexChanged.connect(
+    self.preencher_tabela
+)
+
+self.spin_ano.valueChanged.connect(
+    self.preencher_tabela
+)
         
     def adicionar_culto(self):
     
