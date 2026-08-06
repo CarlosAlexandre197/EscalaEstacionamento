@@ -92,22 +92,25 @@ self.lista_obreiros.itemClicked.connect(self.selecionar_obreiro)
         
     def carregar_obreiros(self):
 
-        self.lista_obreiros.clear()
+    self.tabela_obreiros.setRowCount(0)
 
-        obreiros = self.banco.listar_obreiros()
+    obreiros = self.banco.listar_obreiros()
 
-        for id_obreiro, nome in obreiros:
+    for linha, (id_obreiro, nome) in enumerate(obreiros):
 
-            self.lista_obreiros.addItem(nome)
+        self.tabela_obreiros.insertRow(linha)
 
-            item = self.lista_obreiros.item(
-                self.lista_obreiros.count() - 1
-            )
+        self.tabela_obreiros.setItem(
+            linha,
+            0,
+            QTableWidgetItem(str(id_obreiro))
+        )
 
-            item.setData(
-                256,  # Qt.ItemDataRole.UserRole
-                id_obreiro
-            )
+        self.tabela_obreiros.setItem(
+            linha,
+            1,
+            QTableWidgetItem(nome)
+        )
 
     def adicionar_obreiro(self):
 
