@@ -102,5 +102,21 @@ class Banco:
 
     self.conexao.commit()
 
+   def listar_escala(self, mes, ano):
+
+    self.cursor.execute("""
+        SELECT
+            data,
+            dia,
+            culto,
+            obreiro
+        FROM escalas
+        WHERE mes = ?
+        AND ano = ?
+        ORDER BY data
+    """, (mes, ano))
+
+    return self.cursor.fetchall() 
+
     def fechar(self):
         self.conexao.close()
