@@ -61,6 +61,18 @@ self.tabela_obreiros.setEditTriggers(
 
 self.tabela_obreiros.verticalHeader().setVisible(False)
 
+self.tabela_obreiros.setAlternatingRowColors(True)
+
+self.tabela_obreiros.setSelectionBehavior(
+    QTableWidget.SelectionBehavior.SelectRows
+)
+
+self.tabela_obreiros.setSelectionMode(
+    QTableWidget.SelectionMode.SingleSelection
+)
+
+self.tabela_obreiros.setColumnWidth(0, 70)
+
     def criar_layout(self):
 
         layout_principal = QVBoxLayout()
