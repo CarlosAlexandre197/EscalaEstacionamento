@@ -24,17 +24,17 @@ class Banco:
         self.conexao.commit()
 
         self.cursor.execute("""
-    CREATE TABLE IF NOT EXISTS escalas(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        mes TEXT NOT NULL,
-        ano INTEGER NOT NULL,
-        dia TEXT NOT NULL,
-        culto TEXT NOT NULL,
-        obreiro TEXT NOT NULL
-    )
-""")
+            CREATE TABLE IF NOT EXISTS escalas(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                mes TEXT NOT NULL,
+                ano INTEGER NOT NULL,
+                dia TEXT NOT NULL,
+                culto TEXT NOT NULL,
+                obreiro TEXT NOT NULL
+            )
+        """)
 
-self.conexao.commit()
+        self.conexao.commit()
 
     # ==========================================
     # Obreiros
@@ -81,24 +81,24 @@ self.conexao.commit()
 
     def salvar_escala(self, mes, ano, dia, culto, obreiro):
 
-    self.cursor.execute("""
-        INSERT INTO escalas(
+        self.cursor.execute("""
+            INSERT INTO escalas(
+                mes,
+                ano,
+                dia,
+                culto,
+                obreiro
+            )
+            VALUES (?, ?, ?, ?, ?)
+        """, (
             mes,
             ano,
             dia,
             culto,
             obreiro
-        )
-        VALUES (?, ?, ?, ?, ?)
-    """, (
-        mes,
-        ano,
-        dia,
-        culto,
-        obreiro
-    ))
+        ))
 
-    self.conexao.commit()
+        self.conexao.commit()
 
     def fechar(self):
         self.conexao.close()
