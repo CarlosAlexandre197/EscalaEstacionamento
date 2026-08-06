@@ -276,4 +276,9 @@ class TelaPrincipal(QWidget):
         janela = CadastroObreiros(self.banco)
         janela.exec()
         
+    def obter_nomes_obreiros(self):
+
+    obreiros = self.banco.listar_obreiros()
+
+    return [nome for _, nome in obreiros]
     
