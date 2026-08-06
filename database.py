@@ -79,26 +79,28 @@ class Banco:
     # Fechar conexão
     # ==========================================
 
-    def salvar_escala(self, mes, ano, dia, culto, obreiro):
+    def salvar_escala(self, mes, ano, data, dia, culto, obreiro):
 
-        self.cursor.execute("""
-            INSERT INTO escalas(
-                mes,
-                ano,
-                dia,
-                culto,
-                obreiro
-            )
-            VALUES (?, ?, ?, ?, ?)
-        """, (
+    self.cursor.execute("""
+        INSERT INTO escalas(
             mes,
             ano,
+            data,
             dia,
             culto,
             obreiro
-        ))
+        )
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (
+        mes,
+        ano,
+        data,
+        dia,
+        culto,
+        obreiro
+    ))
 
-        self.conexao.commit()
+    self.conexao.commit()
 
     def fechar(self):
         self.conexao.close()
