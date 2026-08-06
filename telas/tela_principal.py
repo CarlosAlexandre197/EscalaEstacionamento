@@ -278,6 +278,8 @@ class TelaPrincipal(QWidget):
 
         self.btn_obreiros.clicked.connect(self.abrir_cadastro_obreiros)
         
+        self.btn_salvar.clicked.connect(self.salvar_escala)
+        
     def adicionar_culto(self):
     
         janela = AdicionarCulto()
