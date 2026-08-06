@@ -129,77 +129,76 @@ self.lista_obreiros.itemClicked.connect(self.selecionar_obreiro)
 
     def editar_obreiro(self):
 
-        item = self.lista_obreiros.currentItem()
+    linha = self.tabela_obreiros.currentRow()
 
-        if item is None:
+    if linha < 0:
 
-            QMessageBox.warning(
-                self,
-                "Atenção",
-                "Selecione um obreiro."
-            )
-            return
+        QMessageBox.warning(
+            self,
+            "Atenção",
+            "Selecione um obreiro."
+        )
+        return
 
-        novo_nome = self.txt_nome.text().strip()
+    novo_nome = self.txt_nome.text().strip()
 
-        if not novo_nome:
+    if not novo_nome:
 
-            QMessageBox.warning(
-                self,
-                "Atenção",
-                "Digite o novo nome."
-            )
-            return
+        QMessageBox.warning(
+            self,
+            "Atenção",
+            "Digite o novo nome."
+        )
+        return
 
-        id_obreiro = item.data(256)
+    id_obreiro = int(
+        self.tabela_obreiros.item(linha, 0).text()
+    )
 
-        try:
+    try:
 
-            self.banco.editar_obreiro(
-                id_obreiro,
-                novo_nome
-            )
+        self.banco.editar_obreiro(
+            id_obreiro,
+            novo_nome
+        )
 
-            self.carregar_obreiros()
+        self.carregar_obreiros()
+        self.txt_nome.clear()
 
-            self.txt_nome.clear()
+    except Exception as erro:
 
-        except Exception as erro:
-
-            QMessageBox.warning(
-                self,
-                "Erro",
-                str(erro)
-            )
+        QMessageBox.warning(
+            self,
+            "Erro",
+            str(erro)
+        )
 
     def excluir_obreiro(self):
 
-        item = self.lista_obreiros.currentItem()
+    linha = self.tabela_obreiros.currentRow()
 
-        if item is None:
+    if linha < 0:
 
-            QMessageBox.warning(
-                self,
-                "Atenção",
-                "Selecione um obreiro."
-            )
-            return
-
-        resposta = QMessageBox.question(
+        QMessageBox.warning(
             self,
-            "Excluir",
-            "Deseja realmente excluir este obreiro?"
+            "Atenção",
+            "Selecione um obreiro."
         )
+        return
 
-        if resposta != QMessageBox.StandardButton.Yes:
-            return
+    id_obreiro = int(
+        self.tabela_obreiros.item(linha, 0).text()
+    )
 
-        id_obreiro = item.data(256)
+    resposta = QMessageBox.question(
+        self,
+        "Confirmação",
+        "Deseja realmente excluir este obreiro?"
+    )
+
+    if resposta == QMessageBox.StandardButton.Yes:
 
         self.banco.excluir_obreiro(id_obreiro)
 
         self.carregar_obreiros()
-
-   def selecionar_obreiro(self, item):
-
-    self.txt_nome.setText(item.text())
+        self.txt_nome.clear()
