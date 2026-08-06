@@ -299,3 +299,43 @@ class TelaPrincipal(QWidget):
 
         return [nome for _, nome in obreiros]
     
+    def salvar_escala(self):
+
+        mes = self.combo_mes.currentText()
+        ano = self.spin_ano.value()
+
+        for linha in range(self.tabela.rowCount()):
+
+            dia = self.tabela.item(
+                linha,
+                0
+            ).text()
+
+            culto = self.tabela.item(
+                linha,
+                1
+            ).text()
+
+            combo = self.tabela.cellWidget(
+                linha,
+                2
+            )
+
+            obreiro = combo.currentText()
+
+            if obreiro == "Selecione...":
+                continue
+
+            self.banco.salvar_escala(
+                mes,
+                ano,
+                dia,
+                culto,
+                obreiro
+            )
+
+        QMessageBox.information(
+            self,
+            "Sucesso",
+            "Escala salva com sucesso!"
+        )
