@@ -23,15 +23,16 @@ class Banco:
 
         
         self.cursor.execute("""
-            CREATE TABLE IF NOT EXISTS escalas(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                mes TEXT NOT NULL,
-                ano INTEGER NOT NULL,
-                dia TEXT NOT NULL,
-                culto TEXT NOT NULL,
-                obreiro TEXT NOT NULL
-            )
-        """)
+    CREATE TABLE IF NOT EXISTS escalas(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        mes TEXT NOT NULL,
+        ano INTEGER NOT NULL,
+        data TEXT NOT NULL,
+        dia TEXT NOT NULL,
+        culto TEXT NOT NULL,
+        obreiro TEXT NOT NULL
+    )
+""")
 
         self.conexao.commit()
 
