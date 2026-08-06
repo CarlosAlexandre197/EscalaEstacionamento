@@ -40,38 +40,38 @@ class CadastroObreiros(QDialog):
 
         self.tabela_obreiros = QTableWidget()
 
-self.tabela_obreiros.setColumnCount(2)
+        self.tabela_obreiros.setColumnCount(2)
 
-self.tabela_obreiros.setHorizontalHeaderLabels([
-    "ID",
-    "Nome"
-])
+        self.tabela_obreiros.setHorizontalHeaderLabels([
+            "ID",
+            "Nome"
+        ])
 
-self.tabela_obreiros.horizontalHeader().setSectionResizeMode(
-    QHeaderView.ResizeMode.Stretch
-)
+        self.tabela_obreiros.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch
+        )
 
-self.tabela_obreiros.setSelectionBehavior(
-    QTableWidget.SelectionBehavior.SelectRows
-)
+        self.tabela_obreiros.setSelectionBehavior(
+            QTableWidget.SelectionBehavior.SelectRows
+        )
 
-self.tabela_obreiros.setEditTriggers(
-    QTableWidget.EditTrigger.NoEditTriggers
-)
+        self.tabela_obreiros.setEditTriggers(
+            QTableWidget.EditTrigger.NoEditTriggers
+        )
 
-self.tabela_obreiros.verticalHeader().setVisible(False)
+        self.tabela_obreiros.verticalHeader().setVisible(False)
 
-self.tabela_obreiros.setAlternatingRowColors(True)
+        self.tabela_obreiros.setAlternatingRowColors(True)
 
-self.tabela_obreiros.setSelectionBehavior(
-    QTableWidget.SelectionBehavior.SelectRows
-)
+        self.tabela_obreiros.setSelectionBehavior(
+            QTableWidget.SelectionBehavior.SelectRows
+        )
 
-self.tabela_obreiros.setSelectionMode(
-    QTableWidget.SelectionMode.SingleSelection
-)
+        self.tabela_obreiros.setSelectionMode(
+            QTableWidget.SelectionMode.SingleSelection
+        )
 
-self.tabela_obreiros.setColumnWidth(0, 70)
+        self.tabela_obreiros.setColumnWidth(0, 70)
 
     def criar_layout(self):
 
@@ -100,31 +100,31 @@ self.tabela_obreiros.setColumnWidth(0, 70)
         self.btn_excluir.clicked.connect(self.excluir_obreiro)
         self.btn_fechar.clicked.connect(self.close)
 
-self.tabela_obreiros.itemSelectionChanged.connect(
-    self.selecionar_obreiro
+        self.tabela_obreiros.itemSelectionChanged.connect(
+            self.selecionar_obreiro
 )
         
     def carregar_obreiros(self):
 
-    self.tabela_obreiros.setRowCount(0)
+        self.tabela_obreiros.setRowCount(0)
 
-    obreiros = self.banco.listar_obreiros()
+        obreiros = self.banco.listar_obreiros()
 
-    for linha, (id_obreiro, nome) in enumerate(obreiros):
+        for linha, (id_obreiro, nome) in enumerate(obreiros):
 
-        self.tabela_obreiros.insertRow(linha)
+            self.tabela_obreiros.insertRow(linha)
 
-        self.tabela_obreiros.setItem(
-            linha,
-            0,
-            QTableWidgetItem(str(id_obreiro))
-        )
+            self.tabela_obreiros.setItem(
+                linha,
+                0,
+                QTableWidgetItem(str(id_obreiro))
+            )
 
-        self.tabela_obreiros.setItem(
-            linha,
-            1,
-            QTableWidgetItem(nome)
-        )
+            self.tabela_obreiros.setItem(
+                linha,
+                1,
+                QTableWidgetItem(nome)
+            )
 
     def adicionar_obreiro(self):
 
@@ -143,89 +143,89 @@ self.tabela_obreiros.itemSelectionChanged.connect(
 
     def editar_obreiro(self):
 
-    linha = self.tabela_obreiros.currentRow()
+        linha = self.tabela_obreiros.currentRow()
 
-    if linha < 0:
+        if linha < 0:
 
-        QMessageBox.warning(
-            self,
-            "Atenção",
-            "Selecione um obreiro."
-        )
-        return
+            QMessageBox.warning(
+                self,
+                "Atenção",
+                "Selecione um obreiro."
+            )
+            return
 
-    novo_nome = self.txt_nome.text().strip()
+        novo_nome = self.txt_nome.text().strip()
 
-    if not novo_nome:
+        if not novo_nome:
 
-        QMessageBox.warning(
-            self,
-            "Atenção",
-            "Digite o novo nome."
-        )
-        return
+            QMessageBox.warning(
+                self,
+                "Atenção",
+                "Digite o novo nome."
+            )
+            return
 
-    id_obreiro = int(
-        self.tabela_obreiros.item(linha, 0).text()
-    )
-
-    try:
-
-        self.banco.editar_obreiro(
-            id_obreiro,
-            novo_nome
+        id_obreiro = int(
+            self.tabela_obreiros.item(linha, 0).text()
         )
 
-        self.carregar_obreiros()
-        self.txt_nome.clear()
+        try:
 
-    except Exception as erro:
+            self.banco.editar_obreiro(
+                id_obreiro,
+                novo_nome
+            )
 
-        QMessageBox.warning(
-            self,
-            "Erro",
-            str(erro)
-        )
+            self.carregar_obreiros()
+            self.txt_nome.clear()
+
+        except Exception as erro:
+
+            QMessageBox.warning(
+                self,
+                "Erro",
+                str(erro)
+            )
 
     def excluir_obreiro(self):
 
-    linha = self.tabela_obreiros.currentRow()
+        linha = self.tabela_obreiros.currentRow()
 
-    if linha < 0:
+        if linha < 0:
 
-        QMessageBox.warning(
-            self,
-            "Atenção",
-            "Selecione um obreiro."
+            QMessageBox.warning(
+                self,
+                "Atenção",
+                "Selecione um obreiro."
+            )
+            return
+
+        id_obreiro = int(
+            self.tabela_obreiros.item(linha, 0).text()
         )
-        return
 
-    id_obreiro = int(
-        self.tabela_obreiros.item(linha, 0).text()
-    )
+        resposta = QMessageBox.question(
+            self,
+            "Confirmação",
+            "Deseja realmente excluir este obreiro?"
+        )
 
-    resposta = QMessageBox.question(
-        self,
-        "Confirmação",
-        "Deseja realmente excluir este obreiro?"
-    )
+        if resposta == QMessageBox.StandardButton.Yes:
 
-    if resposta == QMessageBox.StandardButton.Yes:
+            self.banco.excluir_obreiro(id_obreiro)
 
-        self.banco.excluir_obreiro(id_obreiro)
-
-        self.carregar_obreiros()
-        self.txt_nome.clear()
+            self.carregar_obreiros()
+            self.txt_nome.clear()
 
     def selecionar_obreiro(self):
 
-    linha = self.tabela_obreiros.currentRow()
+        linha = self.tabela_obreiros.currentRow()
 
-    if linha >= 0:
+        if linha >= 0:
 
-        nome = self.tabela_obreiros.item(
-            linha,
-            1
-        ).text()
+            nome = self.tabela_obreiros.item(
+                linha,
+                1
+            ).text()
 
-        self.txt_nome.setText(nome)
+            self.txt_nome.setText(nome)
