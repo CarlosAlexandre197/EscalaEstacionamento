@@ -88,7 +88,9 @@ self.tabela_obreiros.verticalHeader().setVisible(False)
         self.btn_excluir.clicked.connect(self.excluir_obreiro)
         self.btn_fechar.clicked.connect(self.close)
 
-self.lista_obreiros.itemClicked.connect(self.selecionar_obreiro)
+self.tabela_obreiros.itemSelectionChanged.connect(
+    self.selecionar_obreiro
+)
         
     def carregar_obreiros(self):
 
