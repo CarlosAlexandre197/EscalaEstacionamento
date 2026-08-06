@@ -21,8 +21,7 @@ class Banco:
             )
         """)
 
-        self.conexao.commit()
-
+        
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS escalas(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
