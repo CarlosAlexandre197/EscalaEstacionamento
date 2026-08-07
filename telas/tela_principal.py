@@ -370,16 +370,25 @@ class TelaPrincipal(QWidget):
 
         for linha in range(self.tabela.rowCount()):
 
-            dia = self.tabela.item(
+            # Data
+            data = self.tabela.item(
                 linha,
                 0
             ).text()
 
+            # Dia da semana
+            dia = self.tabela.item(
+                linha,
+                1
+            ).text()
+
+            # Culto
             culto = self.tabela.item(
                 linha,
                 2
             ).text()
 
+            # Obreiro
             combo = self.tabela.cellWidget(
                 linha,
                 3
@@ -396,6 +405,7 @@ class TelaPrincipal(QWidget):
             self.banco.salvar_escala(
                 mes,
                 ano,
+                data,
                 dia,
                 culto,
                 obreiro
