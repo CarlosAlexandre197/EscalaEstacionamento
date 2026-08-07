@@ -377,13 +377,16 @@ class TelaPrincipal(QWidget):
 
             culto = self.tabela.item(
                 linha,
-                1
+                2
             ).text()
 
             combo = self.tabela.cellWidget(
                 linha,
                 3
             )
+
+            if combo is None:
+                continue
 
             obreiro = combo.currentText()
 
