@@ -382,7 +382,7 @@ class TelaPrincipal(QWidget):
 
             combo = self.tabela.cellWidget(
                 linha,
-                2
+                3
             )
 
             obreiro = combo.currentText()
