@@ -81,6 +81,40 @@ class Banco:
 
     def salvar_escala(self, mes, ano, data, dia, culto, obreiro):
 
+    # Verifica se essa escala já existe
+    self.cursor.execute("""
+        SELECT id
+        FROM escalas
+        WHERE mes = ?
+        AND ano = ?
+        AND data = ?
+        AND culto = ?
+    """, (
+        mes,
+        ano,
+        data,
+        culto
+    ))
+
+    registro = self.cursor.fetchone()
+
+    if registro:
+
+        # Atualiza o obreiro existente
+        self.cursor.execute("""
+            UPDATE escalas
+            SET dia = ?,
+                obreiro = ?
+            WHERE id = ?
+        """, (
+            dia,
+            obreiro,
+            registro[0]
+        ))
+
+    else:
+
+        # Cria uma nova escala
         self.cursor.execute("""
             INSERT INTO escalas(
                 mes,
@@ -100,7 +134,7 @@ class Banco:
             obreiro
         ))
 
-        self.conexao.commit()
+    self.conexao.commit()
 
     def listar_escala(self, mes, ano):
 
