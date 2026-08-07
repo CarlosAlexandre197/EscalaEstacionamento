@@ -23,16 +23,16 @@ class Banco:
 
         
         self.cursor.execute("""
-    CREATE TABLE IF NOT EXISTS escalas(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        mes TEXT NOT NULL,
-        ano INTEGER NOT NULL,
-        data TEXT NOT NULL,
-        dia TEXT NOT NULL,
-        culto TEXT NOT NULL,
-        obreiro TEXT NOT NULL
-    )
-""")
+            CREATE TABLE IF NOT EXISTS escalas(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                mes TEXT NOT NULL,
+                ano INTEGER NOT NULL,
+                data TEXT NOT NULL,
+                dia TEXT NOT NULL,
+                culto TEXT NOT NULL,
+                obreiro TEXT NOT NULL
+            )
+        """)
 
         self.conexao.commit()
 
@@ -81,42 +81,42 @@ class Banco:
 
     def salvar_escala(self, mes, ano, data, dia, culto, obreiro):
 
-    self.cursor.execute("""
-        INSERT INTO escalas(
+        self.cursor.execute("""
+            INSERT INTO escalas(
+                mes,
+                ano,
+                data,
+                dia,
+                culto,
+                obreiro
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (
             mes,
             ano,
             data,
             dia,
             culto,
             obreiro
-        )
-        VALUES (?, ?, ?, ?, ?, ?)
-    """, (
-        mes,
-        ano,
-        data,
-        dia,
-        culto,
-        obreiro
-    ))
+        ))
 
-    self.conexao.commit()
+        self.conexao.commit()
 
-   def listar_escala(self, mes, ano):
+    def listar_escala(self, mes, ano):
 
-    self.cursor.execute("""
-        SELECT
-            data,
-            dia,
-            culto,
-            obreiro
-        FROM escalas
-        WHERE mes = ?
-        AND ano = ?
-        ORDER BY data
-    """, (mes, ano))
+        self.cursor.execute("""
+            SELECT
+                data,
+                dia,
+                culto,
+                obreiro
+            FROM escalas
+            WHERE mes = ?
+            AND ano = ?
+            ORDER BY data
+        """, (mes, ano))
 
-    return self.cursor.fetchall() 
+        return self.cursor.fetchall() 
 
     def fechar(self):
         self.conexao.close()
