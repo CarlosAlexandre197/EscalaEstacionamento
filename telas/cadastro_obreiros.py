@@ -128,18 +128,33 @@ class CadastroObreiros(QDialog):
 
     def adicionar_obreiro(self):
 
-            nome = self.txt_nome.text().strip()
+        nome = self.txt_nome.text().strip()
 
-            if not nome:
-                QMessageBox.warning(
-                    self,
-                    "Atenção",
-                    "Digite o nome do obreiro."
-                )
-                return
+        if not nome:
 
-            self.lista_obreiros.addItem(nome)
+            QMessageBox.warning(
+                self,
+                "Atenção",
+                "Digite o nome do obreiro."
+            )
+
+            return
+
+        try:
+
+            self.banco.salvar_obreiro(nome)
+
+            self.carregar_obreiros()
+
             self.txt_nome.clear()
+
+        except Exception as erro:
+
+            QMessageBox.warning(
+                self,
+                "Erro",
+                f"Não foi possível cadastrar o obreiro:\n\n{erro}"
+            )
 
     def editar_obreiro(self):
 
