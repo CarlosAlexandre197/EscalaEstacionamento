@@ -437,3 +437,65 @@ self.spin_ano.valueChanged.connect(
 
                 if indice >= 0:
                     combo.setCurrentIndex(indice)
+
+   def gerar_pdf_escala(self):
+
+    mes = self.combo_mes.currentText()
+    ano = self.spin_ano.value()
+
+    arquivo, _ = QFileDialog.getSaveFileName(
+        self,
+        "Salvar PDF",
+        f"Escala_{mes}_{ano}.pdf",
+        "Arquivos PDF (*.pdf)"
+    )
+
+    if not arquivo:
+        return
+
+    dados = [
+        ["Data", "Dia", "Culto", "Obreiro"]
+    ]
+
+    for linha in range(self.tabela.rowCount()):
+
+        data = self.tabela.item(linha, 0).text()
+        dia = self.tabela.item(linha, 1).text()
+        culto = self.tabela.item(linha, 2).text()
+
+        combo = self.tabela.cellWidget(linha, 3)
+
+        if combo is not None:
+            obreiro = combo.currentText()
+        else:
+            obreiro = ""
+
+        dados.append([
+            data,
+            dia,
+            culto,
+            obreiro
+        ])
+
+    try:
+
+        gerar_pdf(
+            arquivo,
+            mes,
+            ano,
+            dados
+        )
+
+        QMessageBox.information(
+            self,
+            "Sucesso",
+            f"PDF gerado com sucesso!\n\n{arquivo}"
+        )
+
+    except Exception as erro:
+
+        QMessageBox.critical(
+            self,
+            "Erro",
+            f"Não foi possível gerar o PDF:\n\n{erro}"
+        )
