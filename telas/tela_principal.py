@@ -223,6 +223,7 @@ class TelaPrincipal(QWidget):
                 3,
                 combo_obreiro
             )
+
 self.carregar_escala()
             
     def criar_layout(self):
