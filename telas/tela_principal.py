@@ -334,6 +334,8 @@ class TelaPrincipal(QWidget):
         
         self.btn_salvar.clicked.connect(self.salvar_escala)
 
+self.btn_pdf.clicked.connect(self.gerar_pdf_escala)
+
 self.combo_mes.currentIndexChanged.connect(
     self.preencher_tabela
 )
