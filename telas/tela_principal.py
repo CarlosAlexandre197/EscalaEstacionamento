@@ -140,90 +140,90 @@ class TelaPrincipal(QWidget):
         
     def preencher_tabela(self):
 
-    # Cultos fixos
-    cultos = [
-        ("Domingo", "Escola Bíblica"),
-        ("Domingo", "Culto da Família"),
-        ("Quarta", "Culto de Doutrina e Causas Impossíveis")
-    ]
+        # Cultos fixos
+        cultos = [
+            ("Domingo", "Escola Bíblica"),
+            ("Domingo", "Culto da Família"),
+            ("Quarta", "Culto de Doutrina e Causas Impossíveis")
+        ]
 
-    # Pega o mês selecionado no QComboBox
-    mes = self.combo_mes.currentIndex() + 1
+        # Pega o mês selecionado no QComboBox
+        mes = self.combo_mes.currentIndex() + 1
 
-    # Pega o ano selecionado
-    ano = self.spin_ano.value()
+        # Pega o ano selecionado
+        ano = self.spin_ano.value()
 
-    # Busca os obreiros cadastrados
-    obreiros = self.obter_nomes_obreiros()
+        # Busca os obreiros cadastrados
+        obreiros = self.obter_nomes_obreiros()
 
-    # Limpa a tabela
-    self.tabela.setRowCount(0)
+        # Limpa a tabela
+        self.tabela.setRowCount(0)
 
-    linhas = []
+        linhas = []
 
-    # Gera todas as datas dos cultos
-    for dia_semana, culto in cultos:
+        # Gera todas as datas dos cultos
+        for dia_semana, culto in cultos:
 
-        datas = obter_datas(
-            dia_semana,
-            mes,
-            ano
-        )
-
-        for data in datas:
-
-            linhas.append(
-                (data, dia_semana, culto)
+            datas = obter_datas(
+                dia_semana,
+                mes,
+                ano
             )
 
-    # Ordena pela data
-    linhas.sort(
-        key=lambda linha: (
-            int(linha[0][6:10]),
-            int(linha[0][3:5]),
-            int(linha[0][0:2])
-        )
-    )
+            for data in datas:
 
-    # Preenche a tabela
-    for data, dia_semana, culto in linhas:
+                linhas.append(
+                    (data, dia_semana, culto)
+                )
 
-        linha = self.tabela.rowCount()
-
-        self.tabela.insertRow(linha)
-
-        self.tabela.setItem(
-            linha,
-            0,
-            QTableWidgetItem(data)
+        # Ordena pela data
+        linhas.sort(
+            key=lambda linha: (
+                int(linha[0][6:10]),
+                int(linha[0][3:5]),
+                int(linha[0][0:2])
+            )
         )
 
-        self.tabela.setItem(
-            linha,
-            1,
-            QTableWidgetItem(dia_semana)
-        )
+        # Preenche a tabela
+        for data, dia_semana, culto in linhas:
 
-        self.tabela.setItem(
-            linha,
-            2,
-            QTableWidgetItem(culto)
-        )
+            linha = self.tabela.rowCount()
 
-        # ComboBox dos obreiros
-        combo_obreiro = QComboBox()
+            self.tabela.insertRow(linha)
 
-        combo_obreiro.addItem("Selecione...")
+            self.tabela.setItem(
+                linha,
+                0,
+                QTableWidgetItem(data)
+            )
 
-        for nome in obreiros:
-            combo_obreiro.addItem(nome)
+            self.tabela.setItem(
+                linha,
+                1,
+                QTableWidgetItem(dia_semana)
+            )
 
-        self.tabela.setCellWidget(
-            linha,
-            3,
-            combo_obreiro
-        )
-        self.carregar_escala()
+            self.tabela.setItem(
+                linha,
+                2,
+                QTableWidgetItem(culto)
+            )
+
+            # ComboBox dos obreiros
+            combo_obreiro = QComboBox()
+
+            combo_obreiro.addItem("Selecione...")
+
+            for nome in obreiros:
+                combo_obreiro.addItem(nome)
+
+            self.tabela.setCellWidget(
+                linha,
+                3,
+                combo_obreiro
+            )
+            self.carregar_escala()
             
     def criar_layout(self):
 
@@ -334,15 +334,15 @@ class TelaPrincipal(QWidget):
         
         self.btn_salvar.clicked.connect(self.salvar_escala)
 
-self.btn_pdf.clicked.connect(self.gerar_pdf_escala)
+        self.btn_pdf.clicked.connect(self.gerar_pdf_escala)
 
-self.combo_mes.currentIndexChanged.connect(
-    self.preencher_tabela
-)
+        self.combo_mes.currentIndexChanged.connect(
+            self.preencher_tabela
+        )
 
-self.spin_ano.valueChanged.connect(
-    self.preencher_tabela
-)
+        self.spin_ano.valueChanged.connect(
+            self.preencher_tabela
+    )
         
     def adicionar_culto(self):
     
@@ -404,98 +404,98 @@ self.spin_ano.valueChanged.connect(
             "Escala salva com sucesso!"
         )
 
-     def carregar_escala(self):
+    def carregar_escala(self):
 
-    mes = self.combo_mes.currentText()
-    ano = self.spin_ano.value()
+        mes = self.combo_mes.currentText()
+        ano = self.spin_ano.value()
 
-    escala = self.banco.listar_escala(
-        mes,
-        ano
-    )
-
-    if not escala:
-        return
-
-    for linha in range(self.tabela.rowCount()):
-
-        data = self.tabela.item(linha, 0).text()
-        culto = self.tabela.item(linha, 2).text()
-
-        for data_bd, dia_bd, culto_bd, obreiro_bd in escala:
-
-            if data == data_bd and culto == culto_bd:
-
-                combo = self.tabela.cellWidget(
-                    linha,
-                    3
-                )
-
-                indice = combo.findText(
-                    obreiro_bd
-                )
-
-                if indice >= 0:
-                    combo.setCurrentIndex(indice)
-
-   def gerar_pdf_escala(self):
-
-    mes = self.combo_mes.currentText()
-    ano = self.spin_ano.value()
-
-    arquivo, _ = QFileDialog.getSaveFileName(
-        self,
-        "Salvar PDF",
-        f"Escala_{mes}_{ano}.pdf",
-        "Arquivos PDF (*.pdf)"
-    )
-
-    if not arquivo:
-        return
-
-    dados = [
-        ["Data", "Dia", "Culto", "Obreiro"]
-    ]
-
-    for linha in range(self.tabela.rowCount()):
-
-        data = self.tabela.item(linha, 0).text()
-        dia = self.tabela.item(linha, 1).text()
-        culto = self.tabela.item(linha, 2).text()
-
-        combo = self.tabela.cellWidget(linha, 3)
-
-        if combo is not None:
-            obreiro = combo.currentText()
-        else:
-            obreiro = ""
-
-        dados.append([
-            data,
-            dia,
-            culto,
-            obreiro
-        ])
-
-    try:
-
-        gerar_pdf(
-            arquivo,
+        escala = self.banco.listar_escala(
             mes,
-            ano,
-            dados
+            ano
         )
 
-        QMessageBox.information(
+        if not escala:
+            return
+
+        for linha in range(self.tabela.rowCount()):
+
+            data = self.tabela.item(linha, 0).text()
+            culto = self.tabela.item(linha, 2).text()
+
+            for data_bd, dia_bd, culto_bd, obreiro_bd in escala:
+
+                if data == data_bd and culto == culto_bd:
+
+                    combo = self.tabela.cellWidget(
+                        linha,
+                        3
+                    )
+
+                    indice = combo.findText(
+                        obreiro_bd
+                    )
+
+                    if indice >= 0:
+                        combo.setCurrentIndex(indice)
+
+    def gerar_pdf_escala(self):
+
+        mes = self.combo_mes.currentText()
+        ano = self.spin_ano.value()
+
+        arquivo, _ = QFileDialog.getSaveFileName(
             self,
-            "Sucesso",
-            f"PDF gerado com sucesso!\n\n{arquivo}"
+            "Salvar PDF",
+            f"Escala_{mes}_{ano}.pdf",
+            "Arquivos PDF (*.pdf)"
         )
 
-    except Exception as erro:
+        if not arquivo:
+            return
 
-        QMessageBox.critical(
-            self,
-            "Erro",
-            f"Não foi possível gerar o PDF:\n\n{erro}"
-        )
+        dados = [
+            ["Data", "Dia", "Culto", "Obreiro"]
+        ]
+
+        for linha in range(self.tabela.rowCount()):
+
+            data = self.tabela.item(linha, 0).text()
+            dia = self.tabela.item(linha, 1).text()
+            culto = self.tabela.item(linha, 2).text()
+
+            combo = self.tabela.cellWidget(linha, 3)
+
+            if combo is not None:
+                obreiro = combo.currentText()
+            else:
+                obreiro = ""
+
+            dados.append([
+                data,
+                dia,
+                culto,
+                obreiro
+            ])
+
+        try:
+
+            gerar_pdf(
+                arquivo,
+                mes,
+                ano,
+                dados
+            )
+
+            QMessageBox.information(
+                self,
+                "Sucesso",
+                f"PDF gerado com sucesso!\n\n{arquivo}"
+            )
+
+        except Exception as erro:
+
+            QMessageBox.critical(
+                self,
+                "Erro",
+                f"Não foi possível gerar o PDF:\n\n{erro}"
+            )
