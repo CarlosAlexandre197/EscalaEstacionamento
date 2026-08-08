@@ -377,10 +377,13 @@ class TelaPrincipal(QWidget):
 
         obreiros = self.banco.listar_obreiros()
 
+        print("OBREIROS VINDOS DO BANCO:")
+        print(obreiros)
+
         return [
             nome
             for _, nome in obreiros
-            if nome and nome != "Selecione..."
+            if nome and nome.strip().lower() != "selecione..."
         ]
     
     def salvar_escala(self):
