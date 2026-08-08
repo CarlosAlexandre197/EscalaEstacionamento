@@ -76,6 +76,12 @@ class AdicionarCulto(QDialog):
 
             if nome and nome.lower() != "selecione...":
                 self.combo_obreiro.addItem(nome)
+        
+        print("ITENS DO COMBO DE OBREIROS:")
+
+        for i in range(self.combo_obreiro.count()):
+            print(i, repr(self.combo_obreiro.itemText(i)))
+                
 
         # ==========================================
         # Botões
