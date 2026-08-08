@@ -63,10 +63,14 @@ class AdicionarCulto(QDialog):
 
         self.combo_obreiro = QComboBox()
 
+        self.combo_obreiro.clear()
+
         self.combo_obreiro.addItem("Selecione...")
 
         for nome in self.obreiros:
-            self.combo_obreiro.addItem(nome)
+
+            if nome and nome != "Selecione...":
+                self.combo_obreiro.addItem(nome)
 
         # ==========================================
         # Botões
