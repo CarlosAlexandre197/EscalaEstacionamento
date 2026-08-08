@@ -377,7 +377,11 @@ class TelaPrincipal(QWidget):
 
         obreiros = self.banco.listar_obreiros()
 
-        return [nome for _, nome in obreiros]
+        return [
+            nome
+            for _, nome in obreiros
+            if nome and nome != "Selecione..."
+        ]
     
     def salvar_escala(self):
 
