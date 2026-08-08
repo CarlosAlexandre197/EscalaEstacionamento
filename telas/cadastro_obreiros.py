@@ -3,7 +3,9 @@ from PyQt6.QtWidgets import (
     QLabel,
     QLineEdit,
     QPushButton,
-    QListWidget,
+    QTableWidget,
+    QTableWidgetItem,
+    QHeaderView,
     QVBoxLayout,
     QHBoxLayout,
     QMessageBox
@@ -36,7 +38,40 @@ class CadastroObreiros(QDialog):
         self.btn_excluir = QPushButton("Excluir")
         self.btn_fechar = QPushButton("Fechar")
 
-        self.lista_obreiros = QListWidget()
+        self.tabela_obreiros = QTableWidget()
+
+        self.tabela_obreiros.setColumnCount(2)
+
+        self.tabela_obreiros.setHorizontalHeaderLabels([
+            "ID",
+            "Nome"
+        ])
+
+        self.tabela_obreiros.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Stretch
+        )
+
+        self.tabela_obreiros.setSelectionBehavior(
+            QTableWidget.SelectionBehavior.SelectRows
+        )
+
+        self.tabela_obreiros.setEditTriggers(
+            QTableWidget.EditTrigger.NoEditTriggers
+        )
+
+        self.tabela_obreiros.verticalHeader().setVisible(False)
+
+        self.tabela_obreiros.setAlternatingRowColors(True)
+
+        self.tabela_obreiros.setSelectionBehavior(
+            QTableWidget.SelectionBehavior.SelectRows
+        )
+
+        self.tabela_obreiros.setSelectionMode(
+            QTableWidget.SelectionMode.SingleSelection
+        )
+
+        self.tabela_obreiros.setColumnWidth(0, 70)
 
     def criar_layout(self):
 
@@ -52,7 +87,7 @@ class CadastroObreiros(QDialog):
 
         layout_principal.addLayout(layout_botoes)
 
-        layout_principal.addWidget(self.lista_obreiros)
+        layout_principal.addWidget(self.tabela_obreiros)
 
         layout_principal.addWidget(self.btn_fechar)
 
@@ -64,46 +99,68 @@ class CadastroObreiros(QDialog):
         self.btn_editar.clicked.connect(self.editar_obreiro)
         self.btn_excluir.clicked.connect(self.excluir_obreiro)
         self.btn_fechar.clicked.connect(self.close)
+
+        self.tabela_obreiros.itemSelectionChanged.connect(
+            self.selecionar_obreiro
+        )
         
     def carregar_obreiros(self):
 
-        self.lista_obreiros.clear()
+        self.tabela_obreiros.setRowCount(0)
 
         obreiros = self.banco.listar_obreiros()
 
-        for id_obreiro, nome in obreiros:
+        for linha, (id_obreiro, nome) in enumerate(obreiros):
 
-            self.lista_obreiros.addItem(nome)
+            self.tabela_obreiros.insertRow(linha)
 
-            item = self.lista_obreiros.item(
-                self.lista_obreiros.count() - 1
+            self.tabela_obreiros.setItem(
+                linha,
+                0,
+                QTableWidgetItem(str(id_obreiro))
             )
 
-            item.setData(
-                256,  # Qt.ItemDataRole.UserRole
-                id_obreiro
+            self.tabela_obreiros.setItem(
+                linha,
+                1,
+                QTableWidgetItem(nome)
             )
 
     def adicionar_obreiro(self):
 
-            nome = self.txt_nome.text().strip()
+        nome = self.txt_nome.text().strip()
 
-            if not nome:
-                QMessageBox.warning(
-                    self,
-                    "Atenção",
-                    "Digite o nome do obreiro."
-                )
-                return
+        if not nome:
 
-            self.lista_obreiros.addItem(nome)
+            QMessageBox.warning(
+                self,
+                "Atenção",
+                "Digite o nome do obreiro."
+            )
+
+            return
+
+        try:
+
+            self.banco.salvar_obreiro(nome)
+
+            self.carregar_obreiros()
+
             self.txt_nome.clear()
+
+        except Exception as erro:
+
+            QMessageBox.warning(
+                self,
+                "Erro",
+                f"Não foi possível cadastrar o obreiro:\n\n{erro}"
+            )
 
     def editar_obreiro(self):
 
-        item = self.lista_obreiros.currentItem()
+        linha = self.tabela_obreiros.currentRow()
 
-        if item is None:
+        if linha < 0:
 
             QMessageBox.warning(
                 self,
@@ -123,7 +180,9 @@ class CadastroObreiros(QDialog):
             )
             return
 
-        id_obreiro = item.data(256)
+        id_obreiro = int(
+            self.tabela_obreiros.item(linha, 0).text()
+        )
 
         try:
 
@@ -133,7 +192,6 @@ class CadastroObreiros(QDialog):
             )
 
             self.carregar_obreiros()
-
             self.txt_nome.clear()
 
         except Exception as erro:
@@ -146,9 +204,9 @@ class CadastroObreiros(QDialog):
 
     def excluir_obreiro(self):
 
-        item = self.lista_obreiros.currentItem()
+        linha = self.tabela_obreiros.currentRow()
 
-        if item is None:
+        if linha < 0:
 
             QMessageBox.warning(
                 self,
@@ -157,17 +215,32 @@ class CadastroObreiros(QDialog):
             )
             return
 
+        id_obreiro = int(
+            self.tabela_obreiros.item(linha, 0).text()
+        )
+
         resposta = QMessageBox.question(
             self,
-            "Excluir",
+            "Confirmação",
             "Deseja realmente excluir este obreiro?"
         )
 
-        if resposta != QMessageBox.StandardButton.Yes:
-            return
+        if resposta == QMessageBox.StandardButton.Yes:
 
-        id_obreiro = item.data(256)
+            self.banco.excluir_obreiro(id_obreiro)
 
-        self.banco.excluir_obreiro(id_obreiro)
+            self.carregar_obreiros()
+            self.txt_nome.clear()
 
-        self.carregar_obreiros()
+    def selecionar_obreiro(self):
+
+        linha = self.tabela_obreiros.currentRow()
+
+        if linha >= 0:
+
+            nome = self.tabela_obreiros.item(
+                linha,
+                1
+            ).text()
+
+            self.txt_nome.setText(nome)

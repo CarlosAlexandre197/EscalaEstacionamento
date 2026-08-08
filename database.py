@@ -21,6 +21,19 @@ class Banco:
             )
         """)
 
+        
+        self.cursor.execute("""
+            CREATE TABLE IF NOT EXISTS escalas(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                mes TEXT NOT NULL,
+                ano INTEGER NOT NULL,
+                data TEXT NOT NULL,
+                dia TEXT NOT NULL,
+                culto TEXT NOT NULL,
+                obreiro TEXT NOT NULL
+            )
+        """)
+
         self.conexao.commit()
 
     # ==========================================
@@ -65,6 +78,79 @@ class Banco:
     # ==========================================
     # Fechar conexão
     # ==========================================
+
+    def salvar_escala(self, mes, ano, data, dia, culto, obreiro):
+
+        # Verifica se essa escala já existe
+        self.cursor.execute("""
+            SELECT id
+            FROM escalas
+            WHERE mes = ?
+            AND ano = ?
+            AND data = ?
+            AND culto = ?
+        """, (
+            mes,
+            ano,
+            data,
+            culto
+        ))
+
+        registro = self.cursor.fetchone()
+
+        if registro:
+
+            # Atualiza o obreiro existente
+            self.cursor.execute("""
+                UPDATE escalas
+                SET dia = ?,
+                    obreiro = ?
+                WHERE id = ?
+            """, (
+                dia,
+                obreiro,
+                registro[0]
+            ))
+
+        else:
+
+            # Cria uma nova escala
+            self.cursor.execute("""
+                INSERT INTO escalas(
+                    mes,
+                    ano,
+                    data,
+                    dia,
+                    culto,
+                    obreiro
+                )
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, (
+                mes,
+                ano,
+                data,
+                dia,
+                culto,
+                obreiro
+            ))
+
+        self.conexao.commit()
+
+    def listar_escala(self, mes, ano):
+
+        self.cursor.execute("""
+            SELECT
+                data,
+                dia,
+                culto,
+                obreiro
+            FROM escalas
+            WHERE mes = ?
+            AND ano = ?
+            ORDER BY data
+        """, (mes, ano))
+
+        return self.cursor.fetchall() 
 
     def fechar(self):
         self.conexao.close()
