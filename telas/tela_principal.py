@@ -17,6 +17,7 @@ from telas.adicionar_culto import AdicionarCulto
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QWidget,
+    QDialog,
     QLabel,
     QPushButton,
     QComboBox,
@@ -346,9 +347,23 @@ class TelaPrincipal(QWidget):
     )
         
     def adicionar_culto(self):
-    
-        janela = AdicionarCulto()
-        janela.exec()
+
+        obreiros = self.obter_nomes_obreiros()
+
+        janela = AdicionarCulto(obreiros)
+
+        if janela.exec() == QDialog.DialogCode.Accepted:
+
+            dados = janela.obter_dados()
+
+            print("Novo culto:", dados)
+
+            # Aqui vamos adicionar o culto na tabela
+            self.adicionar_culto_tabela(
+                dados["dia"],
+                dados["culto"],
+                dados["obreiro"]
+            )
 
     def remover_culto(self):
         print("Remover culto")
@@ -512,4 +527,57 @@ class TelaPrincipal(QWidget):
                 self,
                 "Erro",
                 f"Não foi possível gerar o PDF:\n\n{erro}"
+            )
+            
+    def adicionar_culto_tabela(self, dia_semana, culto, obreiro):
+
+        mes = self.combo_mes.currentIndex() + 1
+        ano = self.spin_ano.value()
+
+        datas = obter_datas(
+            dia_semana,
+            mes,
+            ano
+        )
+
+        for data in datas:
+
+            linha = self.tabela.rowCount()
+
+            self.tabela.insertRow(linha)
+
+            self.tabela.setItem(
+                linha,
+                0,
+                QTableWidgetItem(data)
+            )
+
+            self.tabela.setItem(
+                linha,
+                1,
+                QTableWidgetItem(dia_semana)
+            )
+
+            self.tabela.setItem(
+                linha,
+                2,
+                QTableWidgetItem(culto)
+            )
+
+            combo_obreiro = QComboBox()
+
+            combo_obreiro.addItem("Selecione...")
+
+            for nome in self.obter_nomes_obreiros():
+                combo_obreiro.addItem(nome)
+
+            indice = combo_obreiro.findText(obreiro)
+
+            if indice >= 0:
+                combo_obreiro.setCurrentIndex(indice)
+
+            self.tabela.setCellWidget(
+                linha,
+                3,
+                combo_obreiro
             )
