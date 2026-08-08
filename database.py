@@ -150,7 +150,13 @@ class Banco:
             ORDER BY data
         """, (mes, ano))
 
-        return self.cursor.fetchall() 
+        return self.cursor.fetchall()
+    
+    def limpar_escalas(self):
+
+        self.cursor.execute("DELETE FROM escalas")
+
+        self.conexao.commit() 
 
     def fechar(self):
         self.conexao.close()
