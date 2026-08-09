@@ -466,30 +466,42 @@ class TelaPrincipal(QWidget):
 
     def carregar_escala(self):
 
-        mes = self.combo_mes.currentText()
-        ano = self.spin_ano.value()
+    mes = self.combo_mes.currentText()
+    ano = self.spin_ano.value()
 
-        escala = self.banco.listar_escala(
-            mes,
-            ano
-        )
+    escala = self.banco.listar_escala(
+        mes,
+        ano
+    )
 
-        if not escala:
-            return
+    if not escala:
+        return
 
+    for data_bd, dia_bd, culto_bd, obreiro_bd in escala:
+
+        encontrou = False
+
+        # Procura se a linha já existe
         for linha in range(self.tabela.rowCount()):
 
-            data = self.tabela.item(linha, 0).text()
-            culto = self.tabela.item(linha, 2).text()
+            data = self.tabela.item(
+                linha,
+                0
+            ).text()
 
-            for data_bd, dia_bd, culto_bd, obreiro_bd in escala:
+            culto = self.tabela.item(
+                linha,
+                2
+            ).text()
 
-                if data == data_bd and culto == culto_bd:
+            if data == data_bd and culto == culto_bd:
 
-                    combo = self.tabela.cellWidget(
-                        linha,
-                        3
-                    )
+                combo = self.tabela.cellWidget(
+                    linha,
+                    3
+                )
+
+                if combo is not None:
 
                     indice = combo.findText(
                         obreiro_bd
@@ -497,6 +509,22 @@ class TelaPrincipal(QWidget):
 
                     if indice >= 0:
                         combo.setCurrentIndex(indice)
+
+                encontrou = True
+                break
+
+        # ==========================================
+        # Se não encontrou, é um culto personalizado
+        # ==========================================
+
+        if not encontrou:
+
+            self.adicionar_culto_tabela(
+                data_bd,
+                dia_bd,
+                culto_bd,
+                obreiro_bd
+            )
 
     def gerar_pdf_escala(self):
 
