@@ -348,46 +348,46 @@ class TelaPrincipal(QWidget):
         
     def adicionar_culto(self):
 
-    obreiros = self.obter_nomes_obreiros()
+        obreiros = self.obter_nomes_obreiros()
 
-    mes = self.combo_mes.currentIndex() + 1
-    ano = self.spin_ano.value()
+        mes = self.combo_mes.currentIndex() + 1
+        ano = self.spin_ano.value()
 
-    janela = AdicionarCulto(
-        obreiros,
-        mes,
-        ano
-    )
-
-    if janela.exec() == QDialog.DialogCode.Accepted:
-
-        dados = janela.obter_dados()
-
-        print("Novo culto:", dados)
-
-        # Adiciona na tabela
-        self.adicionar_culto_tabela(
-            dados["data"],
-            dados["dia"],
-            dados["culto"],
-            dados["obreiro"]
+        janela = AdicionarCulto(
+            obreiros,
+            mes,
+            ano
         )
 
-        # Salva no banco
-        self.banco.salvar_escala(
-            self.combo_mes.currentText(),
-            ano,
-            dados["data"],
-            dados["dia"],
-            dados["culto"],
-            dados["obreiro"]
-        )
+        if janela.exec() == QDialog.DialogCode.Accepted:
 
-        QMessageBox.information(
-            self,
-            "Sucesso",
-            "Culto adicionado e salvo com sucesso!"
-        )
+            dados = janela.obter_dados()
+
+            print("Novo culto:", dados)
+
+            # Adiciona na tabela
+            self.adicionar_culto_tabela(
+                dados["data"],
+                dados["dia"],
+                dados["culto"],
+                dados["obreiro"]
+            )
+
+            # Salva no banco
+            self.banco.salvar_escala(
+                self.combo_mes.currentText(),
+                ano,
+                dados["data"],
+                dados["dia"],
+                dados["culto"],
+                dados["obreiro"]
+            )
+
+            QMessageBox.information(
+                self,
+                "Sucesso",
+                "Culto adicionado e salvo com sucesso!"
+            )
 
     def remover_culto(self):
         print("Remover culto")
@@ -466,65 +466,65 @@ class TelaPrincipal(QWidget):
 
     def carregar_escala(self):
 
-    mes = self.combo_mes.currentText()
-    ano = self.spin_ano.value()
+        mes = self.combo_mes.currentText()
+        ano = self.spin_ano.value()
 
-    escala = self.banco.listar_escala(
-        mes,
-        ano
-    )
+        escala = self.banco.listar_escala(
+            mes,
+            ano
+        )
 
-    if not escala:
-        return
+        if not escala:
+            return
 
-    for data_bd, dia_bd, culto_bd, obreiro_bd in escala:
+        for data_bd, dia_bd, culto_bd, obreiro_bd in escala:
 
-        encontrou = False
+            encontrou = False
 
-        # Procura se a linha já existe
-        for linha in range(self.tabela.rowCount()):
+            # Procura se a linha já existe
+            for linha in range(self.tabela.rowCount()):
 
-            data = self.tabela.item(
-                linha,
-                0
-            ).text()
-
-            culto = self.tabela.item(
-                linha,
-                2
-            ).text()
-
-            if data == data_bd and culto == culto_bd:
-
-                combo = self.tabela.cellWidget(
+                data = self.tabela.item(
                     linha,
-                    3
-                )
+                    0
+                ).text()
 
-                if combo is not None:
+                culto = self.tabela.item(
+                    linha,
+                    2
+                ).text()
 
-                    indice = combo.findText(
-                        obreiro_bd
+                if data == data_bd and culto == culto_bd:
+
+                    combo = self.tabela.cellWidget(
+                        linha,
+                        3
                     )
 
-                    if indice >= 0:
-                        combo.setCurrentIndex(indice)
+                    if combo is not None:
 
-                encontrou = True
-                break
+                        indice = combo.findText(
+                            obreiro_bd
+                        )
 
-        # ==========================================
-        # Se não encontrou, é um culto personalizado
-        # ==========================================
+                        if indice >= 0:
+                            combo.setCurrentIndex(indice)
 
-        if not encontrou:
+                    encontrou = True
+                    break
 
-            self.adicionar_culto_tabela(
-                data_bd,
-                dia_bd,
-                culto_bd,
-                obreiro_bd
-            )
+            # ==========================================
+            # Se não encontrou, é um culto personalizado
+            # ==========================================
+
+            if not encontrou:
+
+                self.adicionar_culto_tabela(
+                    data_bd,
+                    dia_bd,
+                    culto_bd,
+                    obreiro_bd
+                )
 
     def gerar_pdf_escala(self):
 
