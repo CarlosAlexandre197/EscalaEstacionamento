@@ -348,29 +348,46 @@ class TelaPrincipal(QWidget):
         
     def adicionar_culto(self):
 
-        obreiros = self.obter_nomes_obreiros()
+    obreiros = self.obter_nomes_obreiros()
 
-        mes = self.combo_mes.currentIndex() + 1
-        ano = self.spin_ano.value()
+    mes = self.combo_mes.currentIndex() + 1
+    ano = self.spin_ano.value()
 
-        janela = AdicionarCulto(
-            obreiros,
-            mes,
-            ano
+    janela = AdicionarCulto(
+        obreiros,
+        mes,
+        ano
+    )
+
+    if janela.exec() == QDialog.DialogCode.Accepted:
+
+        dados = janela.obter_dados()
+
+        print("Novo culto:", dados)
+
+        # Adiciona na tabela
+        self.adicionar_culto_tabela(
+            dados["data"],
+            dados["dia"],
+            dados["culto"],
+            dados["obreiro"]
         )
 
-        if janela.exec() == QDialog.DialogCode.Accepted:
+        # Salva no banco
+        self.banco.salvar_escala(
+            self.combo_mes.currentText(),
+            ano,
+            dados["data"],
+            dados["dia"],
+            dados["culto"],
+            dados["obreiro"]
+        )
 
-            dados = janela.obter_dados()
-
-            print("Novo culto:", dados)
-
-            self.adicionar_culto_tabela(
-                dados["data"],
-                dados["dia"],
-                dados["culto"],
-                dados["obreiro"]
-            )
+        QMessageBox.information(
+            self,
+            "Sucesso",
+            "Culto adicionado e salvo com sucesso!"
+        )
 
     def remover_culto(self):
         print("Remover culto")
