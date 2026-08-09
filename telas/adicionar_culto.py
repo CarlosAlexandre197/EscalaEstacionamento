@@ -1,3 +1,4 @@
+from PyQt6.QtCore import QDate
 from PyQt6.QtWidgets import (
     QDialog,
     QLabel,
@@ -6,16 +7,19 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QVBoxLayout,
     QHBoxLayout,
-    QMessageBox
+    QMessageBox,
+    QDateEdit
 )
 
 
 class AdicionarCulto(QDialog):
 
-    def __init__(self, obreiros=None):
+    def __init__(self, obreiros=None, mes=None, ano=None):
         super().__init__()
 
         self.obreiros = obreiros or []
+        self.mes = mes
+        self.ano = ano
 
         self.configurar_janela()
         self.criar_componentes()
@@ -24,27 +28,38 @@ class AdicionarCulto(QDialog):
 
     def configurar_janela(self):
         self.setWindowTitle("Adicionar Culto")
-        self.setFixedSize(400, 250)
+        self.setFixedSize(400, 300)
 
     def criar_componentes(self):
 
         # ==========================================
-        # Dia da semana
+        # Data
         # ==========================================
 
-        self.lbl_dia = QLabel("Dia da semana")
+        self.lbl_data = QLabel("Data do culto")
 
-        self.combo_dia = QComboBox()
+        self.edit_data = QDateEdit()
+        self.edit_data.setCalendarPopup(True)
+        self.edit_data.setDisplayFormat("dd/MM/yyyy")
 
-        self.combo_dia.addItems([
-            "Domingo",
-            "Segunda",
-            "Terça",
-            "Quarta",
-            "Quinta",
-            "Sexta",
-            "Sábado"
-        ])
+        # Define o mês/ano da escala
+        if self.mes and self.ano:
+
+            primeiro_dia = QDate(
+                self.ano,
+                self.mes,
+                1
+            )
+
+            ultimo_dia = QDate(
+                self.ano,
+                self.mes,
+                primeiro_dia.daysInMonth()
+            )
+
+            self.edit_data.setMinimumDate(primeiro_dia)
+            self.edit_data.setMaximumDate(ultimo_dia)
+            self.edit_data.setDate(primeiro_dia)
 
         # ==========================================
         # Nome do culto
@@ -53,7 +68,9 @@ class AdicionarCulto(QDialog):
         self.lbl_culto = QLabel("Nome do culto")
 
         self.edit_culto = QLineEdit()
-        self.edit_culto.setPlaceholderText("Digite o nome do culto")
+        self.edit_culto.setPlaceholderText(
+            "Digite o nome do culto"
+        )
 
         # ==========================================
         # Obreiro
@@ -63,25 +80,16 @@ class AdicionarCulto(QDialog):
 
         self.combo_obreiro = QComboBox()
 
-        # Limpa completamente o ComboBox
         self.combo_obreiro.clear()
 
-        # Adiciona somente uma opção inicial
         self.combo_obreiro.addItem("Selecione...")
 
-        # Adiciona os obreiros
         for nome in self.obreiros:
 
             nome = str(nome).strip()
 
             if nome and nome.lower() != "selecione...":
                 self.combo_obreiro.addItem(nome)
-        
-        print("ITENS DO COMBO DE OBREIROS:")
-
-        for i in range(self.combo_obreiro.count()):
-            print(i, repr(self.combo_obreiro.itemText(i)))
-                
 
         # ==========================================
         # Botões
@@ -94,8 +102,8 @@ class AdicionarCulto(QDialog):
 
         layout = QVBoxLayout()
 
-        layout.addWidget(self.lbl_dia)
-        layout.addWidget(self.combo_dia)
+        layout.addWidget(self.lbl_data)
+        layout.addWidget(self.edit_data)
 
         layout.addWidget(self.lbl_culto)
         layout.addWidget(self.edit_culto)
@@ -122,7 +130,6 @@ class AdicionarCulto(QDialog):
         culto = self.edit_culto.text().strip()
         obreiro = self.combo_obreiro.currentText()
 
-        # Verifica se o nome do culto foi informado
         if not culto:
 
             QMessageBox.warning(
@@ -133,7 +140,6 @@ class AdicionarCulto(QDialog):
 
             return
 
-        # Verifica se o obreiro foi selecionado
         if obreiro == "Selecione...":
 
             QMessageBox.warning(
@@ -144,14 +150,29 @@ class AdicionarCulto(QDialog):
 
             return
 
-        # Confirma o cadastro
         self.accept()
 
     def obter_dados(self):
 
+        data = self.edit_data.date()
+
+        dias_semana = [
+            "Segunda",
+            "Terça",
+            "Quarta",
+            "Quinta",
+            "Sexta",
+            "Sábado",
+            "Domingo"
+        ]
+
+        dia_semana = dias_semana[
+            data.dayOfWeek() - 1
+        ]
+
         return {
-            "dia": self.combo_dia.currentText(),
+            "data": data.toString("dd/MM/yyyy"),
+            "dia": dia_semana,
             "culto": self.edit_culto.text().strip(),
             "obreiro": self.combo_obreiro.currentText()
         }
-

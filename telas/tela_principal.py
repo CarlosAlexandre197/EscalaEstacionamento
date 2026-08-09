@@ -350,7 +350,14 @@ class TelaPrincipal(QWidget):
 
         obreiros = self.obter_nomes_obreiros()
 
-        janela = AdicionarCulto(obreiros)
+        mes = self.combo_mes.currentIndex() + 1
+        ano = self.spin_ano.value()
+
+        janela = AdicionarCulto(
+            obreiros,
+            mes,
+            ano
+        )
 
         if janela.exec() == QDialog.DialogCode.Accepted:
 
@@ -358,8 +365,8 @@ class TelaPrincipal(QWidget):
 
             print("Novo culto:", dados)
 
-            # Aqui vamos adicionar o culto na tabela
             self.adicionar_culto_tabela(
+                dados["data"],
                 dados["dia"],
                 dados["culto"],
                 dados["obreiro"]
@@ -536,55 +543,89 @@ class TelaPrincipal(QWidget):
                 f"Não foi possível gerar o PDF:\n\n{erro}"
             )
             
-    def adicionar_culto_tabela(self, dia_semana, culto, obreiro):
+    def adicionar_culto_tabela(
+        self,
+        data,
+        dia_semana,
+        culto,
+        obreiro
+    ):
 
-        mes = self.combo_mes.currentIndex() + 1
-        ano = self.spin_ano.value()
+        # ==========================================
+        # Verifica se o culto já existe na tabela
+        # ==========================================
 
-        datas = obter_datas(
-            dia_semana,
-            mes,
-            ano
+        for linha in range(self.tabela.rowCount()):
+
+            data_existente = self.tabela.item(
+                linha,
+                0
+            ).text()
+
+            culto_existente = self.tabela.item(
+                linha,
+                2
+            ).text()
+
+            if (
+                data_existente == data
+                and culto_existente == culto
+            ):
+
+                QMessageBox.warning(
+                    self,
+                    "Atenção",
+                    "Esse culto já está cadastrado nessa data."
+                )
+
+                return
+
+        # ==========================================
+        # Adiciona somente UMA linha
+        # ==========================================
+
+        linha = self.tabela.rowCount()
+
+        self.tabela.insertRow(linha)
+
+        self.tabela.setItem(
+            linha,
+            0,
+            QTableWidgetItem(data)
         )
 
-        for data in datas:
+        self.tabela.setItem(
+            linha,
+            1,
+            QTableWidgetItem(dia_semana)
+        )
 
-            linha = self.tabela.rowCount()
+        self.tabela.setItem(
+            linha,
+            2,
+            QTableWidgetItem(culto)
+        )
 
-            self.tabela.insertRow(linha)
+        # ==========================================
+        # ComboBox de obreiro
+        # ==========================================
 
-            self.tabela.setItem(
-                linha,
-                0,
-                QTableWidgetItem(data)
-            )
+        combo_obreiro = QComboBox()
 
-            self.tabela.setItem(
-                linha,
-                1,
-                QTableWidgetItem(dia_semana)
-            )
+        combo_obreiro.addItem("Selecione...")
 
-            self.tabela.setItem(
-                linha,
-                2,
-                QTableWidgetItem(culto)
-            )
+        for nome in self.obter_nomes_obreiros():
 
-            combo_obreiro = QComboBox()
-
-            combo_obreiro.addItem("Selecione...")
-
-            for nome in self.obter_nomes_obreiros():
+            if nome != "Selecione...":
                 combo_obreiro.addItem(nome)
 
-            indice = combo_obreiro.findText(obreiro)
+        indice = combo_obreiro.findText(obreiro)
 
-            if indice >= 0:
-                combo_obreiro.setCurrentIndex(indice)
+        if indice >= 0:
+            combo_obreiro.setCurrentIndex(indice)
 
-            self.tabela.setCellWidget(
-                linha,
-                3,
-                combo_obreiro
-            )
+        self.tabela.setCellWidget(
+            linha,
+            3,
+            combo_obreiro
+        )
