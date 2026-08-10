@@ -502,99 +502,99 @@ def remover_culto(self):
     
     def salvar_escala(self):
 
-    mes = self.combo_mes.currentText()
-    ano = self.spin_ano.value()
+        mes = self.combo_mes.currentText()
+        ano = self.spin_ano.value()
 
-    cultos_sem_obreiro = []
+        cultos_sem_obreiro = []
 
-    # ==========================================
-    # Primeiro verifica se existe algum culto
-    # sem obreiro
-    # ==========================================
+        # ==========================================
+        # Primeiro verifica se existe algum culto
+        # sem obreiro
+        # ==========================================
 
-    for linha in range(self.tabela.rowCount()):
+        for linha in range(self.tabela.rowCount()):
 
-        data = self.tabela.item(linha, 0).text()
-        culto = self.tabela.item(linha, 2).text()
+            data = self.tabela.item(linha, 0).text()
+            culto = self.tabela.item(linha, 2).text()
 
-        combo = self.tabela.cellWidget(linha, 3)
+            combo = self.tabela.cellWidget(linha, 3)
 
-        if combo is None:
-            continue
+            if combo is None:
+                continue
 
-        obreiro = combo.currentText()
+            obreiro = combo.currentText()
 
-        if obreiro == "Selecione...":
-            cultos_sem_obreiro.append(
-                f"{data} — {culto}"
+            if obreiro == "Selecione...":
+                cultos_sem_obreiro.append(
+                    f"{data} — {culto}"
+                )
+
+        # ==========================================
+        # Se encontrou cultos sem obreiro
+        # ==========================================
+
+        if cultos_sem_obreiro:
+
+            lista = "\n".join(
+                cultos_sem_obreiro
             )
 
-    # ==========================================
-    # Se encontrou cultos sem obreiro
-    # ==========================================
+            QMessageBox.warning(
+                self,
+                "Escala incompleta",
+                "Os seguintes cultos estão sem obreiro:\n\n"
+                + lista
+                + "\n\n"
+                "Selecione um obreiro antes de salvar."
+            )
 
-    if cultos_sem_obreiro:
+            return
 
-        lista = "\n".join(
-            cultos_sem_obreiro
-        )
+        # ==========================================
+        # Todos possuem obreiro
+        # ==========================================
 
-        QMessageBox.warning(
+        for linha in range(self.tabela.rowCount()):
+
+            data = self.tabela.item(
+                linha,
+                0
+            ).text()
+
+            dia = self.tabela.item(
+                linha,
+                1
+            ).text()
+
+            culto = self.tabela.item(
+                linha,
+                2
+            ).text()
+
+            combo = self.tabela.cellWidget(
+                linha,
+                3
+            )
+
+            if combo is None:
+                continue
+
+            obreiro = combo.currentText()
+
+            self.banco.salvar_escala(
+                mes,
+                ano,
+                data,
+                dia,
+                culto,
+                obreiro
+            )
+
+        QMessageBox.information(
             self,
-            "Escala incompleta",
-            "Os seguintes cultos estão sem obreiro:\n\n"
-            + lista
-            + "\n\n"
-            "Selecione um obreiro antes de salvar."
+            "Sucesso",
+            "Escala salva com sucesso!"
         )
-
-        return
-
-    # ==========================================
-    # Todos possuem obreiro
-    # ==========================================
-
-    for linha in range(self.tabela.rowCount()):
-
-        data = self.tabela.item(
-            linha,
-            0
-        ).text()
-
-        dia = self.tabela.item(
-            linha,
-            1
-        ).text()
-
-        culto = self.tabela.item(
-            linha,
-            2
-        ).text()
-
-        combo = self.tabela.cellWidget(
-            linha,
-            3
-        )
-
-        if combo is None:
-            continue
-
-        obreiro = combo.currentText()
-
-        self.banco.salvar_escala(
-            mes,
-            ano,
-            data,
-            dia,
-            culto,
-            obreiro
-        )
-
-    QMessageBox.information(
-        self,
-        "Sucesso",
-        "Escala salva com sucesso!"
-    )
 
     def carregar_escala(self):
 
@@ -809,9 +809,9 @@ def remover_culto(self):
 
         self.ordenar_tabela_por_data()
 
-   def ordenar_tabela_por_data(self):
+    def ordenar_tabela_por_data(self):
 
-    self.tabela.sortItems(
-        0,
-        Qt.SortOrder.AscendingOrder
-    )
+        self.tabela.sortItems(
+            0,
+            Qt.SortOrder.AscendingOrder
+        )
