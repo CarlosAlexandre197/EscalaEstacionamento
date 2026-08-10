@@ -807,6 +807,8 @@ def remover_culto(self):
             combo_obreiro
         )
 
+        self.ordenar_tabela_por_data()
+
    def ordenar_tabela_por_data(self):
 
     self.tabela.sortItems(
