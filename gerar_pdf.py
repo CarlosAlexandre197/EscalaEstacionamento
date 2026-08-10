@@ -94,6 +94,7 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
         logo.hAlign = "CENTER"
 
         elementos.append(logo)
+
         elementos.append(
             Spacer(1, 0.3 * cm)
         )
@@ -249,7 +250,7 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
     ]
 
     # ==========================================
-    # Linhas alternadas
+    # LINHAS ALTERNADAS
     # ==========================================
 
     for linha in range(1, len(dados)):
@@ -280,65 +281,43 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
     )
 
     caminho_assinatura = os.path.join(
-    os.path.dirname(__file__),
-    "recursos",
-    "assinatura_carlos_alexandre.png"
-)
-
-if os.path.exists(caminho_assinatura):
-
-    assinatura_img = Image(
-        caminho_assinatura,
-        width=7 * cm,
-        height=3 * cm
+        os.path.dirname(__file__),
+        "recursos",
+        "assinatura_carlos_alexandre.png"
     )
 
-    assinatura_img.hAlign = "CENTER"
+    if os.path.exists(caminho_assinatura):
 
-    elementos.append(assinatura_img)
-
-    elementos.append(
-        Paragraph(
-            "Carlos Alexandre<br/>"
-            "Responsável pela escala",
-            rodape
+        assinatura_img = Image(
+            caminho_assinatura,
+            width=7 * cm,
+            height=3 * cm
         )
-    )
 
-else:
+        assinatura_img.hAlign = "CENTER"
 
-    elementos.append(
-        Paragraph(
-            "________________________________________<br/>"
-            "Responsável pela escala",
-            rodape
+        elementos.append(
+            assinatura_img
         )
-    )
 
-    assinatura.setStyle(
-        TableStyle([
-            (
-                "ALIGN",
-                (0, 0),
-                (-1, -1),
-                "CENTER"
-            ),
-            (
-                "FONTNAME",
-                (0, 1),
-                (-1, 1),
-                "Helvetica"
-            ),
-            (
-                "FONTSIZE",
-                (0, 1),
-                (-1, 1),
-                9
+        elementos.append(
+            Paragraph(
+                "Carlos Alexandre<br/>"
+                "Responsável pela escala",
+                rodape
             )
-        ])
-    )
+        )
 
-    elementos.append(assinatura)
+    else:
+
+        elementos.append(
+            Paragraph(
+                "________________________________________<br/>"
+                "Carlos Alexandre<br/>"
+                "Responsável pela escala",
+                rodape
+            )
+        )
 
     # ==========================================
     # RODAPÉ
