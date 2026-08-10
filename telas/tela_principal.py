@@ -389,8 +389,98 @@ class TelaPrincipal(QWidget):
                 "Culto adicionado e salvo com sucesso!"
             )
 
-    def remover_culto(self):
-        print("Remover culto")
+    
+def remover_culto(self):
+
+    linha = self.tabela.currentRow()
+
+    # Nenhuma linha selecionada
+    if linha < 0:
+
+        QMessageBox.warning(
+            self,
+            "Atenção",
+            "Selecione um culto na tabela para remover."
+        )
+
+        return
+
+    # ==========================================
+    # Dados da linha selecionada
+    # ==========================================
+
+    data = self.tabela.item(
+        linha,
+        0
+    ).text()
+
+    culto = self.tabela.item(
+        linha,
+        2
+    ).text()
+
+    # ==========================================
+    # Cultos fixos
+    # ==========================================
+
+    cultos_fixos = [
+        "Escola Bíblica",
+        "Culto da Família",
+        "Culto de Doutrina e Causas Impossíveis"
+    ]
+
+    if culto in cultos_fixos:
+
+        QMessageBox.information(
+            self,
+            "Culto fixo",
+            "Esse culto é fixo e não pode ser removido."
+        )
+
+        return
+
+    # ==========================================
+    # Confirmação
+    # ==========================================
+
+    resposta = QMessageBox.question(
+        self,
+        "Confirmar remoção",
+        f"Deseja remover o culto?\n\n"
+        f"Data: {data}\n"
+        f"Culto: {culto}",
+        QMessageBox.StandardButton.Yes |
+        QMessageBox.StandardButton.No
+    )
+
+    if resposta != QMessageBox.StandardButton.Yes:
+        return
+
+    # ==========================================
+    # Remove do banco
+    # ==========================================
+
+    mes = self.combo_mes.currentText()
+    ano = self.spin_ano.value()
+
+    self.banco.excluir_escala(
+        mes,
+        ano,
+        data,
+        culto
+    )
+
+    # ==========================================
+    # Remove da tabela
+    # ==========================================
+
+    self.tabela.removeRow(linha)
+
+    QMessageBox.information(
+        self,
+        "Sucesso",
+        "Culto removido com sucesso!"
+    )
 
     def abrir_cadastro_obreiros(self):
 
