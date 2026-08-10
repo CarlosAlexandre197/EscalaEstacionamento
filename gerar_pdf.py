@@ -82,10 +82,6 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
         "recursos",
         "logo_igreja.jpg"
     )
-    
-    print("CAMINHO DA LOGO:")
-    print(caminho_logo)
-    print("LOGO EXISTE?", os.path.exists(caminho_logo))
 
     if os.path.exists(caminho_logo):
 
@@ -289,10 +285,6 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
         "recursos",
         "assinatura_carlos_alexandre.png"
     )
-    
-    print("CAMINHO DA ASSINATURA:")
-    print(caminho_assinatura)
-    print("ASSINATURA EXISTE?", os.path.exists(caminho_assinatura))
 
     if os.path.exists(caminho_assinatura):
 
