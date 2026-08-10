@@ -344,7 +344,7 @@ class TelaPrincipal(QWidget):
 
         self.spin_ano.valueChanged.connect(
             self.preencher_tabela
-    )
+        )
         
     def adicionar_culto(self):
 
@@ -390,97 +390,97 @@ class TelaPrincipal(QWidget):
             )
 
     
-def remover_culto(self):
+    def remover_culto(self):
 
-    linha = self.tabela.currentRow()
+        linha = self.tabela.currentRow()
 
-    # Nenhuma linha selecionada
-    if linha < 0:
+        # Nenhuma linha selecionada
+        if linha < 0:
 
-        QMessageBox.warning(
+            QMessageBox.warning(
+                self,
+                "Atenção",
+                "Selecione um culto na tabela para remover."
+            )
+
+            return
+
+        # ==========================================
+        # Dados da linha selecionada
+        # ==========================================
+
+        data = self.tabela.item(
+            linha,
+            0
+        ).text()
+
+        culto = self.tabela.item(
+            linha,
+            2
+        ).text()
+
+        # ==========================================
+        # Cultos fixos
+        # ==========================================
+
+        cultos_fixos = [
+            "Escola Bíblica",
+            "Culto da Família",
+            "Culto de Doutrina e Causas Impossíveis"
+        ]
+
+        if culto in cultos_fixos:
+
+            QMessageBox.information(
+                self,
+                "Culto fixo",
+                "Esse culto é fixo e não pode ser removido."
+            )
+
+            return
+
+        # ==========================================
+        # Confirmação
+        # ==========================================
+
+        resposta = QMessageBox.question(
             self,
-            "Atenção",
-            "Selecione um culto na tabela para remover."
+            "Confirmar remoção",
+            f"Deseja remover o culto?\n\n"
+            f"Data: {data}\n"
+            f"Culto: {culto}",
+            QMessageBox.StandardButton.Yes |
+            QMessageBox.StandardButton.No
         )
 
-        return
+        if resposta != QMessageBox.StandardButton.Yes:
+            return
 
-    # ==========================================
-    # Dados da linha selecionada
-    # ==========================================
+        # ==========================================
+        # Remove do banco
+        # ==========================================
 
-    data = self.tabela.item(
-        linha,
-        0
-    ).text()
+        mes = self.combo_mes.currentText()
+        ano = self.spin_ano.value()
 
-    culto = self.tabela.item(
-        linha,
-        2
-    ).text()
+        self.banco.excluir_escala(
+            mes,
+            ano,
+            data,
+            culto
+        )
 
-    # ==========================================
-    # Cultos fixos
-    # ==========================================
+        # ==========================================
+        # Remove da tabela
+        # ==========================================
 
-    cultos_fixos = [
-        "Escola Bíblica",
-        "Culto da Família",
-        "Culto de Doutrina e Causas Impossíveis"
-    ]
-
-    if culto in cultos_fixos:
+        self.tabela.removeRow(linha)
 
         QMessageBox.information(
             self,
-            "Culto fixo",
-            "Esse culto é fixo e não pode ser removido."
+            "Sucesso",
+            "Culto removido com sucesso!"
         )
-
-        return
-
-    # ==========================================
-    # Confirmação
-    # ==========================================
-
-    resposta = QMessageBox.question(
-        self,
-        "Confirmar remoção",
-        f"Deseja remover o culto?\n\n"
-        f"Data: {data}\n"
-        f"Culto: {culto}",
-        QMessageBox.StandardButton.Yes |
-        QMessageBox.StandardButton.No
-    )
-
-    if resposta != QMessageBox.StandardButton.Yes:
-        return
-
-    # ==========================================
-    # Remove do banco
-    # ==========================================
-
-    mes = self.combo_mes.currentText()
-    ano = self.spin_ano.value()
-
-    self.banco.excluir_escala(
-        mes,
-        ano,
-        data,
-        culto
-    )
-
-    # ==========================================
-    # Remove da tabela
-    # ==========================================
-
-    self.tabela.removeRow(linha)
-
-    QMessageBox.information(
-        self,
-        "Sucesso",
-        "Culto removido com sucesso!"
-    )
 
     def abrir_cadastro_obreiros(self):
 
@@ -726,7 +726,7 @@ def remover_culto(self):
         dia_semana,
         culto,
         obreiro
-    ):
+        ):
 
         # ==========================================
         # Verifica se o culto já existe na tabela
@@ -815,3 +815,4 @@ def remover_culto(self):
             0,
             Qt.SortOrder.AscendingOrder
         )
+        
