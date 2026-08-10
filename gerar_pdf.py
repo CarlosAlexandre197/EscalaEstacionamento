@@ -3,26 +3,45 @@ from reportlab.platypus import (
     Table,
     TableStyle,
     Paragraph,
-    Spacer
+    Spacer,
+    Image
 )
 
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.units import cm
+from reportlab.lib.pagesizes import A4
+
+import os
 
 
 def gerar_pdf(nome_arquivo, mes, ano, dados):
 
     documento = SimpleDocTemplate(
         nome_arquivo,
+        pagesize=A4,
         rightMargin=1.5 * cm,
         leftMargin=1.5 * cm,
-        topMargin=1.5 * cm,
+        topMargin=1.2 * cm,
         bottomMargin=1.5 * cm
     )
 
     estilos = getSampleStyleSheet()
+
+    # ==========================================
+    # ESTILOS
+    # ==========================================
+
+    nome_igreja = ParagraphStyle(
+        "NomeIgreja",
+        parent=estilos["Title"],
+        fontSize=16,
+        leading=20,
+        alignment=TA_CENTER,
+        textColor=colors.HexColor("#0D4F6F"),
+        spaceAfter=5
+    )
 
     titulo = ParagraphStyle(
         "TituloEscala",
@@ -31,20 +50,73 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
         leading=24,
         alignment=TA_CENTER,
         textColor=colors.HexColor("#1565C0"),
-        spaceAfter=8
+        spaceAfter=5
     )
 
     periodo = ParagraphStyle(
         "Periodo",
         parent=estilos["Heading2"],
-        fontSize=14,
-        leading=18,
+        fontSize=13,
+        leading=17,
         alignment=TA_CENTER,
         textColor=colors.HexColor("#333333"),
-        spaceAfter=20
+        spaceAfter=15
+    )
+
+    rodape = ParagraphStyle(
+        "Rodape",
+        parent=estilos["Normal"],
+        fontSize=8,
+        alignment=TA_CENTER,
+        textColor=colors.HexColor("#777777")
     )
 
     elementos = []
+
+    # ==========================================
+    # LOGO
+    # ==========================================
+
+    caminho_logo = os.path.join(
+        os.path.dirname(__file__),
+        "recursos",
+        "logo_igreja.jpg"
+    )
+
+    if os.path.exists(caminho_logo):
+
+        logo = Image(
+            caminho_logo,
+            width=3.5 * cm,
+            height=3.5 * cm
+        )
+
+        logo.hAlign = "CENTER"
+
+        elementos.append(logo)
+        elementos.append(
+            Spacer(1, 0.3 * cm)
+        )
+
+    # ==========================================
+    # NOME DA IGREJA
+    # ==========================================
+
+    elementos.append(
+        Paragraph(
+            "ADSAM 317<br/>"
+            "MINISTÉRIO MADUREIRA",
+            nome_igreja
+        )
+    )
+
+    elementos.append(
+        Spacer(1, 0.2 * cm)
+    )
+
+    # ==========================================
+    # TÍTULO
+    # ==========================================
 
     elementos.append(
         Paragraph(
@@ -60,24 +132,32 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
         )
     )
 
+    # ==========================================
+    # TABELA
+    # ==========================================
+
     tabela = Table(
         dados,
         colWidths=[
             3.0 * cm,
             3.0 * cm,
-            8.0 * cm,
-            4.0 * cm
+            7.5 * cm,
+            4.5 * cm
         ],
         repeatRows=1
     )
 
     estilo_tabela = [
+
+        # --------------------------------------
         # Cabeçalho
+        # --------------------------------------
+
         (
             "BACKGROUND",
             (0, 0),
             (-1, 0),
-            colors.HexColor("#1565C0")
+            colors.HexColor("#0D4F6F")
         ),
 
         (
@@ -101,7 +181,10 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
             10
         ),
 
+        # --------------------------------------
         # Corpo
+        # --------------------------------------
+
         (
             "FONTNAME",
             (0, 1),
@@ -116,7 +199,10 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
             9
         ),
 
+        # --------------------------------------
         # Alinhamento
+        # --------------------------------------
+
         (
             "ALIGN",
             (0, 0),
@@ -131,7 +217,10 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
             "MIDDLE"
         ),
 
+        # --------------------------------------
         # Bordas
+        # --------------------------------------
+
         (
             "GRID",
             (0, 0),
@@ -140,7 +229,10 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
             colors.HexColor("#BDBDBD")
         ),
 
+        # --------------------------------------
         # Espaçamento
+        # --------------------------------------
+
         (
             "TOPPADDING",
             (0, 0),
@@ -156,7 +248,10 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
         )
     ]
 
+    # ==========================================
     # Linhas alternadas
+    # ==========================================
+
     for linha in range(1, len(dados)):
 
         if linha % 2 == 0:
@@ -176,8 +271,12 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
 
     elementos.append(tabela)
 
+    # ==========================================
+    # ASSINATURA
+    # ==========================================
+
     elementos.append(
-        Spacer(1, 2 * cm)
+        Spacer(1, 1.5 * cm)
     )
 
     assinatura = Table(
@@ -212,5 +311,24 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
     )
 
     elementos.append(assinatura)
+
+    # ==========================================
+    # RODAPÉ
+    # ==========================================
+
+    elementos.append(
+        Spacer(1, 1 * cm)
+    )
+
+    elementos.append(
+        Paragraph(
+            "Escala do Estacionamento",
+            rodape
+        )
+    )
+
+    # ==========================================
+    # GERAR PDF
+    # ==========================================
 
     documento.build(elementos)
