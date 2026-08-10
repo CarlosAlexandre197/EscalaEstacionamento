@@ -156,24 +156,24 @@ class Banco:
 
         self.cursor.execute("DELETE FROM escalas")
 
-         self.conexao.commit()
+        self.conexao.commit()
 
     def excluir_escala(self, mes, ano, data, culto):
 
-    self.cursor.execute("""
-        DELETE FROM escalas
-        WHERE mes = ?
-        AND ano = ?
-        AND data = ?
-        AND culto = ?
-    """, (
-        mes,
-        ano,
-        data,
-        culto
-    ))
+        self.cursor.execute("""
+            DELETE FROM escalas
+            WHERE mes = ?
+            AND ano = ?
+            AND data = ?
+            AND culto = ?
+        """, (
+            mes,
+            ano,
+            data,
+            culto
+        ))
 
-    self.conexao.commit()
+        self.conexao.commit()
 
     def fechar(self):
         self.conexao.close()
