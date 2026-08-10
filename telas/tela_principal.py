@@ -806,3 +806,10 @@ def remover_culto(self):
             3,
             combo_obreiro
         )
+
+   def ordenar_tabela_por_data(self):
+
+    self.tabela.sortItems(
+        0,
+        Qt.SortOrder.AscendingOrder
+    )
