@@ -279,12 +279,40 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
         Spacer(1, 1.5 * cm)
     )
 
-    assinatura = Table(
-        [
-            ["________________________________________"],
-            ["Responsável pela escala"]
-        ],
-        colWidths=[7 * cm]
+    caminho_assinatura = os.path.join(
+    os.path.dirname(__file__),
+    "recursos",
+    "assinatura_carlos_alexandre.png"
+)
+
+if os.path.exists(caminho_assinatura):
+
+    assinatura_img = Image(
+        caminho_assinatura,
+        width=7 * cm,
+        height=3 * cm
+    )
+
+    assinatura_img.hAlign = "CENTER"
+
+    elementos.append(assinatura_img)
+
+    elementos.append(
+        Paragraph(
+            "Carlos Alexandre<br/>"
+            "Responsável pela escala",
+            rodape
+        )
+    )
+
+else:
+
+    elementos.append(
+        Paragraph(
+            "________________________________________<br/>"
+            "Responsável pela escala",
+            rodape
+        )
     )
 
     assinatura.setStyle(
