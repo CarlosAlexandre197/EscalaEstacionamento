@@ -97,6 +97,7 @@ class TelaPrincipal(QWidget):
         self.btn_obreiros = QPushButton("👥 Obreiros")
         self.btn_salvar = QPushButton("💾 Salvar")
         self.btn_pdf = QPushButton("📄 Gerar PDF")
+        self.btn_whatsapp = QPushButton("📱 WhatsApp")
         self.btn_adicionar = QPushButton("➕ Adicionar Culto")
         self.btn_remover = QPushButton("🗑 Remover Culto")
 
