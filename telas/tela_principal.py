@@ -1,4 +1,4 @@
-from whatsapp import abrir_whatsapp
+from whatsapp import enviar_pdf_whatsapp
 from gerar_pdf import gerar_pdf
 from datas import obter_datas
 from telas.cadastro_obreiros import CadastroObreiros
@@ -731,7 +731,37 @@ class TelaPrincipal(QWidget):
 
     def enviar_whatsapp(self):
 
-        abrir_whatsapp()
+        if not self.ultimo_pdf:
+
+            QMessageBox.warning(
+                self,
+                "Atenção",
+                "Primeiro gere o PDF da escala."
+            )
+
+            return
+
+        sucesso = enviar_pdf_whatsapp(
+            self.ultimo_pdf
+        )
+
+        if not sucesso:
+
+            QMessageBox.warning(
+                self,
+                "Erro",
+                "O PDF da escala não foi encontrado."
+            )
+
+            return
+
+        QMessageBox.information(
+            self,
+            "WhatsApp",
+            "WhatsApp Web foi aberto.\n\n"
+            "O PDF da escala está pronto para você anexar "
+            "e enviar ao grupo."
+        )
             
     def adicionar_culto_tabela(
         self,
