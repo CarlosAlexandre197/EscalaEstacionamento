@@ -725,6 +725,10 @@ self.btn_whatsapp.clicked.connect(self.enviar_whatsapp)
                 "Erro",
                 f"Não foi possível gerar o PDF:\n\n{erro}"
             )
+
+    def enviar_whatsapp(self):
+
+    abrir_whatsapp()
             
     def adicionar_culto_tabela(
         self,
@@ -821,4 +825,6 @@ self.btn_whatsapp.clicked.connect(self.enviar_whatsapp)
             0,
             Qt.SortOrder.AscendingOrder
         )
+
+
         
