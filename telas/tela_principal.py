@@ -293,11 +293,11 @@ class TelaPrincipal(QWidget):
 
         layout_botoes.addWidget(self.btn_obreiros)
 
-layout_botoes.addStretch()
+        layout_botoes.addStretch()
 
-layout_botoes.addWidget(self.btn_salvar)
-layout_botoes.addWidget(self.btn_pdf)
-layout_botoes.addWidget(self.btn_whatsapp)
+        layout_botoes.addWidget(self.btn_salvar)
+        layout_botoes.addWidget(self.btn_pdf)
+        layout_botoes.addWidget(self.btn_whatsapp)
 
         layout_principal.addLayout(layout_botoes)
 
@@ -342,15 +342,15 @@ layout_botoes.addWidget(self.btn_whatsapp)
         self.btn_pdf.clicked.connect(self.gerar_pdf_escala)
 
 
-self.btn_whatsapp.clicked.connect(self.enviar_whatsapp)
+        self.btn_whatsapp.clicked.connect(self.enviar_whatsapp)
 
         self.combo_mes.currentIndexChanged.connect(
-            self.preencher_tabela
-        )
+                    self.preencher_tabela
+                )
 
         self.spin_ano.valueChanged.connect(
-            self.preencher_tabela
-        )
+                    self.preencher_tabela
+            )
         
     def adicionar_culto(self):
 
@@ -728,7 +728,7 @@ self.btn_whatsapp.clicked.connect(self.enviar_whatsapp)
 
     def enviar_whatsapp(self):
 
-    abrir_whatsapp()
+        abrir_whatsapp()
             
     def adicionar_culto_tabela(
         self,
