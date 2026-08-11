@@ -2,4 +2,10 @@ import webbrowser
 
 
 def abrir_whatsapp():
-    webbrowser.open("https://web.whatsapp.com/")
+    """
+    Abre o WhatsApp Web no navegador.
+    """
+
+    webbrowser.open(
+        "https://web.whatsapp.com/"
+    )
