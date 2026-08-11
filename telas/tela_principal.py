@@ -293,10 +293,11 @@ class TelaPrincipal(QWidget):
 
         layout_botoes.addWidget(self.btn_obreiros)
 
-        layout_botoes.addStretch()
+layout_botoes.addStretch()
 
-        layout_botoes.addWidget(self.btn_salvar)
-        layout_botoes.addWidget(self.btn_pdf)
+layout_botoes.addWidget(self.btn_salvar)
+layout_botoes.addWidget(self.btn_pdf)
+layout_botoes.addWidget(self.btn_whatsapp)
 
         layout_principal.addLayout(layout_botoes)
 
