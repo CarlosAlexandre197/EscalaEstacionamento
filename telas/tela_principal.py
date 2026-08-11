@@ -40,6 +40,7 @@ class TelaPrincipal(QWidget):
         super().__init__()
         
         self.banco = banco
+        self.ultimo_pdf = None
 
         self.configurar_janela()
         self.criar_componentes()
@@ -711,6 +712,8 @@ class TelaPrincipal(QWidget):
                 ano,
                 dados
             )
+            
+            self.ultimo_pdf = arquivo
 
             QMessageBox.information(
                 self,
