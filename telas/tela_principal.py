@@ -1,3 +1,4 @@
+from whatsapp import abrir_whatsapp
 from gerar_pdf import gerar_pdf
 from datas import obter_datas
 from telas.cadastro_obreiros import CadastroObreiros
