@@ -341,6 +341,9 @@ layout_botoes.addWidget(self.btn_whatsapp)
 
         self.btn_pdf.clicked.connect(self.gerar_pdf_escala)
 
+
+self.btn_whatsapp.clicked.connect(self.enviar_whatsapp)
+
         self.combo_mes.currentIndexChanged.connect(
             self.preencher_tabela
         )
