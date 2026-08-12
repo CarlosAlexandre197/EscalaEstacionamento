@@ -101,6 +101,25 @@ QPushButton:pressed {
 }
 """
 
+BOTAO_WHATSAPP = """
+QPushButton {
+    background-color: #25D366;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #20BD5A;
+}
+
+QPushButton:pressed {
+    background-color: #1DA851;
+}
+"""
+
 # ==========================================
 # COMBOBOX
 # ==========================================
