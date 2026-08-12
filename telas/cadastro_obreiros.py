@@ -170,7 +170,7 @@ class CadastroObreiros(QDialog):
         self.tabela_obreiros.setUpdatesEnabled(True)
         self.tabela_obreiros.viewport().update()
 
-    print("TABELA ATUALIZADA:", obreiros)
+        print("TABELA ATUALIZADA:", obreiros)
 
     def adicionar_obreiro(self):
 
