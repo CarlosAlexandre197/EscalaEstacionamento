@@ -85,6 +85,7 @@ class CadastroObreiros(QDialog):
         layout_botoes.addWidget(self.btn_adicionar)
         layout_botoes.addWidget(self.btn_editar)
         layout_botoes.addWidget(self.btn_excluir)
+        layout_botoes.addWidget(self.btn_atualizar)
 
         layout_principal.addLayout(layout_botoes)
 
