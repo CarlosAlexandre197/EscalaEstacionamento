@@ -1,11 +1,28 @@
 import sqlite3
+import os
 
 
 class Banco:
 
     def __init__(self):
-        self.conexao = sqlite3.connect("banco/sistema_escalas.db")
+        # Pasta onde o programa está sendo executado
+        pasta_programa = os.path.dirname(os.path.abspath(__file__))
+
+        # Caminho da pasta do banco
+        pasta_banco = os.path.join(pasta_programa, "banco")
+
+        # Cria a pasta banco caso ela não exista
+        os.makedirs(pasta_banco, exist_ok=True)
+
+        # Caminho completo do banco de dados
+        caminho_banco = os.path.join(
+            pasta_banco,
+            "sistema_escalas.db"
+        )
+
+        self.conexao = sqlite3.connect(caminho_banco)
         self.cursor = self.conexao.cursor()
+
         self.criar_tabelas()
 
     # ==========================================
