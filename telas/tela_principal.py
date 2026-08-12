@@ -502,7 +502,11 @@ class TelaPrincipal(QWidget):
     def abrir_cadastro_obreiros(self):
 
         janela = CadastroObreiros(self.banco)
+
         janela.exec()
+
+        # Atualiza a tabela principal após fechar o cadastro
+        self.preencher_tabela()
         
     def obter_nomes_obreiros(self):
 
