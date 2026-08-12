@@ -100,7 +100,7 @@ class CadastroObreiros(QDialog):
         self.btn_adicionar.clicked.connect(self.adicionar_obreiro)
         self.btn_editar.clicked.connect(self.editar_obreiro)
         self.btn_excluir.clicked.connect(self.excluir_obreiro)
-        self.btn_atualizar.clicked.connect(self.carregar_obreiros)
+        self.btn_atualizar.clicked.connect(self.atualizar_obreiros)
         self.btn_fechar.clicked.connect(self.close)
 
         self.tabela_obreiros.itemSelectionChanged.connect(
@@ -128,6 +128,11 @@ class CadastroObreiros(QDialog):
                 1,
                 QTableWidgetItem(nome)
             )
+            
+    def atualizar_obreiros(self):
+
+        self.carregar_obreiros()
+        self.txt_nome.clear()
 
     def adicionar_obreiro(self):
 
@@ -247,3 +252,5 @@ class CadastroObreiros(QDialog):
             ).text()
 
             self.txt_nome.setText(nome)
+            
+    
