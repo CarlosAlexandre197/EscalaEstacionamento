@@ -131,7 +131,10 @@ class CadastroObreiros(QDialog):
             
     def atualizar_obreiros(self):
 
+        print("BOTÃO ATUALIZAR FOI CLICADO!")
+
         self.carregar_obreiros()
+
         self.txt_nome.clear()
 
     def adicionar_obreiro(self):
