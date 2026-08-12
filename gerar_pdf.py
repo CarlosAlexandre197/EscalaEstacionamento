@@ -14,7 +14,19 @@ from reportlab.lib.units import cm
 from reportlab.lib.pagesizes import A4
 
 import os
+import sys
 
+def caminho_recurso(nome_arquivo):
+    if getattr(sys, "frozen", False):
+        pasta = sys._MEIPASS
+    else:
+        pasta = os.path.dirname(os.path.abspath(__file__))
+
+    return os.path.join(
+        pasta,
+        "recursos",
+        nome_arquivo
+    )
 
 def gerar_pdf(nome_arquivo, mes, ano, dados):
 
@@ -77,11 +89,7 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
     # LOGO
     # ==========================================
 
-    caminho_logo = os.path.join(
-        os.path.dirname(__file__),
-        "recursos",
-        "logo_igreja.jpg"
-    )
+    caminho_logo = caminho_recurso("logo_igreja.jpg")
 
     if os.path.exists(caminho_logo):
 
@@ -280,9 +288,7 @@ def gerar_pdf(nome_arquivo, mes, ano, dados):
         Spacer(1, 1.5 * cm)
     )
 
-    caminho_assinatura = os.path.join(
-        os.path.dirname(__file__),
-        "recursos",
+    caminho_assinatura = caminho_recurso(
         "assinatura_carlos_alexandre.png"
     )
 

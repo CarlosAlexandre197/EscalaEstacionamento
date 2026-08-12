@@ -36,6 +36,7 @@ class CadastroObreiros(QDialog):
         self.btn_adicionar = QPushButton("Adicionar")
         self.btn_editar = QPushButton("Editar")
         self.btn_excluir = QPushButton("Excluir")
+        self.btn_atualizar = QPushButton("🔄 Atualizar")
         self.btn_fechar = QPushButton("Fechar")
 
         self.tabela_obreiros = QTableWidget()
