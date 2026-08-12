@@ -7,32 +7,32 @@ class Banco:
 
     def __init__(self):
 
-        pasta_programa = os.path.dirname(
-            os.path.abspath(sys.executable)
+        # Pasta onde está o projeto
+        pasta_projeto = os.path.dirname(
+            os.path.abspath(__file__)
         )
 
-        pasta_projeto = os.path.dirname(pasta_programa)
-
+        # Pasta do banco dentro do projeto
         pasta_banco = os.path.join(
             pasta_projeto,
             "banco"
         )
 
+        # Cria a pasta caso não exista
         os.makedirs(pasta_banco, exist_ok=True)
 
+        # Caminho do banco
         caminho_banco = os.path.join(
             pasta_banco,
             "sistema_escalas.db"
         )
 
+        print("BANCO USADO PELO PROGRAMA:", caminho_banco)
+
         self.conexao = sqlite3.connect(caminho_banco)
         self.cursor = self.conexao.cursor()
 
         self.criar_tabelas()
-
-    # ==========================================
-    # Criação das tabelas
-    # ==========================================
 
     def criar_tabelas(self):
 

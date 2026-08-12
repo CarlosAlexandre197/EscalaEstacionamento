@@ -144,13 +144,19 @@ class CadastroObreiros(QDialog):
 
         print("BOTÃO ATUALIZAR FOI CLICADO!")
 
+        # Busca novamente os dados do banco
+        obreiros = self.banco.listar_obreiros()
+
+        print("OBREIROS PARA ATUALIZAR:", obreiros)
+
+        # Desativa temporariamente a atualização visual
         self.tabela_obreiros.setUpdatesEnabled(False)
 
+        # Limpa completamente a tabela
         self.tabela_obreiros.clearContents()
         self.tabela_obreiros.setRowCount(0)
 
-        obreiros = self.banco.listar_obreiros()
-
+        # Recria as linhas
         for linha, (id_obreiro, nome) in enumerate(obreiros):
 
             self.tabela_obreiros.insertRow(linha)
@@ -167,10 +173,16 @@ class CadastroObreiros(QDialog):
                 QTableWidgetItem(nome)
             )
 
+        # Reativa a atualização visual
         self.tabela_obreiros.setUpdatesEnabled(True)
-        self.tabela_obreiros.viewport().update()
 
-        print("TABELA ATUALIZADA:", obreiros)
+        # Força a atualização da tabela
+        self.tabela_obreiros.viewport().update()
+        self.tabela_obreiros.repaint()
+
+        # Limpa a seleção e o campo de texto
+        self.tabela_obreiros.clearSelection()
+        self.txt_nome.clear()
 
     def adicionar_obreiro(self):
 
