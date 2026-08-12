@@ -61,10 +61,16 @@ class TelaPrincipal(QWidget):
         # ==========================================
 
         self.spin_ano = QSpinBox()
-        self.spin_ano.setMinimum(2025)
-        self.spin_ano.setMaximum(2100)
+        self.spin_ano.setRange(2025, 2100)
         self.spin_ano.setValue(2026)
         self.spin_ano.setSingleStep(1)
+        self.spin_ano.setButtonSymbols(QSpinBox.ButtonSymbols.UpDownArrows)
+
+        print("ANO INICIAL:", self.spin_ano.value())
+        
+        self.spin_ano.valueChanged.connect(
+            lambda valor: print("ANO ALTERADO PARA:", valor)
+        )
 
         # ==========================================
         # Título
@@ -315,8 +321,9 @@ class TelaPrincipal(QWidget):
         self.lbl_titulo.setStyleSheet(TITULO)
 
         # Campos
-        self.combo_mes.setStyleSheet(COMBOBOX)
-        self.spin_ano.setStyleSheet(SPINBOX)
+        # Não aplicar estilos diretamente no mês e ano
+        # self.combo_mes.setStyleSheet(COMBOBOX)
+        # self.spin_ano.setStyleSheet(SPINBOX)
 
         # Tabela
         self.tabela.setStyleSheet(TABELA)
@@ -330,7 +337,7 @@ class TelaPrincipal(QWidget):
         self.btn_obreiros.setStyleSheet(BOTAO_SECUNDARIO)
         self.btn_adicionar.setStyleSheet(BOTAO_SECUNDARIO)
         self.btn_remover.setStyleSheet(BOTAO_SECUNDARIO)
-        
+
         self.grupo_dados.setStyleSheet(GROUPBOX)
         self.grupo_escala.setStyleSheet(GROUPBOX)
         

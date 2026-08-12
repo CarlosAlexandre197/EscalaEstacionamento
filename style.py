@@ -130,17 +130,6 @@ QComboBox {
     border: 1px solid #BDBDBD;
     border-radius: 5px;
     padding: 6px;
-    padding-right: 25px;
-}
-
-QComboBox::drop-down {
-    width: 22px;
-    border-left: 1px solid #BDBDBD;
-    background-color: #E8E8E8;
-}
-
-QComboBox::drop-down:hover {
-    background-color: #D0D0D0;
 }
 """
 
@@ -154,30 +143,6 @@ QSpinBox {
     border: 1px solid #BDBDBD;
     border-radius: 5px;
     padding: 6px;
-    padding-right: 25px;
-}
-
-QSpinBox::up-button {
-    subcontrol-origin: border;
-    subcontrol-position: top right;
-    width: 20px;
-    height: 14px;
-    background-color: #E8E8E8;
-    border-left: 1px solid #BDBDBD;
-}
-
-QSpinBox::down-button {
-    subcontrol-origin: border;
-    subcontrol-position: bottom right;
-    width: 20px;
-    height: 14px;
-    background-color: #E8E8E8;
-    border-left: 1px solid #BDBDBD;
-}
-
-QSpinBox::up-button:hover,
-QSpinBox::down-button:hover {
-    background-color: #D0D0D0;
 }
 """
 
