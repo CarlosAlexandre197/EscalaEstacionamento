@@ -142,11 +142,35 @@ class CadastroObreiros(QDialog):
             
     def atualizar_obreiros(self):
 
-        print("BOTÃO ATUALIZAR FOI CLICADO!")
+    print("BOTÃO ATUALIZAR FOI CLICADO!")
 
-        self.carregar_obreiros()
+    self.tabela_obreiros.setUpdatesEnabled(False)
 
-        self.txt_nome.clear()
+    self.tabela_obreiros.clearContents()
+    self.tabela_obreiros.setRowCount(0)
+
+    obreiros = self.banco.listar_obreiros()
+
+    for linha, (id_obreiro, nome) in enumerate(obreiros):
+
+        self.tabela_obreiros.insertRow(linha)
+
+        self.tabela_obreiros.setItem(
+            linha,
+            0,
+            QTableWidgetItem(str(id_obreiro))
+        )
+
+        self.tabela_obreiros.setItem(
+            linha,
+            1,
+            QTableWidgetItem(nome)
+        )
+
+    self.tabela_obreiros.setUpdatesEnabled(True)
+    self.tabela_obreiros.viewport().update()
+
+    print("TABELA ATUALIZADA:", obreiros)
 
     def adicionar_obreiro(self):
 
