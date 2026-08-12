@@ -354,7 +354,7 @@ class TelaPrincipal(QWidget):
 
         self.spin_ano.valueChanged.connect(
                     self.preencher_tabela
-            )
+        )
         
     def adicionar_culto(self):
 
