@@ -9,6 +9,7 @@ from style import (
     GROUPBOX,
     BOTAO_PRIMARIO,
     BOTAO_SECUNDARIO,
+    BOTAO_WHATSAPP,
     TABELA,
     COMBOBOX,
     SPINBOX
