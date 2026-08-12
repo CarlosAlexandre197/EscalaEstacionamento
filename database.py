@@ -1,20 +1,25 @@
 import sqlite3
 import os
+import sys
 
 
 class Banco:
 
     def __init__(self):
-        # Pasta onde o programa está sendo executado
-        pasta_programa = os.path.dirname(os.path.abspath(__file__))
 
-        # Caminho da pasta do banco
-        pasta_banco = os.path.join(pasta_programa, "banco")
+        pasta_programa = os.path.dirname(
+            os.path.abspath(sys.executable)
+        )
 
-        # Cria a pasta banco caso ela não exista
+        pasta_projeto = os.path.dirname(pasta_programa)
+
+        pasta_banco = os.path.join(
+            pasta_projeto,
+            "banco"
+        )
+
         os.makedirs(pasta_banco, exist_ok=True)
 
-        # Caminho completo do banco de dados
         caminho_banco = os.path.join(
             pasta_banco,
             "sistema_escalas.db"
