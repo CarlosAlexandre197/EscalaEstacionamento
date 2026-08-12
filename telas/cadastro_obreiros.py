@@ -100,6 +100,7 @@ class CadastroObreiros(QDialog):
         self.btn_adicionar.clicked.connect(self.adicionar_obreiro)
         self.btn_editar.clicked.connect(self.editar_obreiro)
         self.btn_excluir.clicked.connect(self.excluir_obreiro)
+        self.btn_atualizar.clicked.connect(self.carregar_obreiros)
         self.btn_fechar.clicked.connect(self.close)
 
         self.tabela_obreiros.itemSelectionChanged.connect(
