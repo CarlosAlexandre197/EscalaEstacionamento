@@ -323,8 +323,7 @@ class TelaPrincipal(QWidget):
         # Botões principais
         self.btn_salvar.setStyleSheet(BOTAO_PRIMARIO)
         self.btn_pdf.setStyleSheet(BOTAO_PRIMARIO)
-
-self.btn_whatsapp.setStyleSheet(BOTAO_WHATSAPP)
+        self.btn_whatsapp.setStyleSheet(BOTAO_WHATSAPP)
 
         # Botões secundários
         self.btn_obreiros.setStyleSheet(BOTAO_SECUNDARIO)
