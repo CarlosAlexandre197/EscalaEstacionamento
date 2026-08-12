@@ -64,6 +64,7 @@ class TelaPrincipal(QWidget):
         self.spin_ano.setMinimum(2025)
         self.spin_ano.setMaximum(2100)
         self.spin_ano.setValue(2026)
+        self.spin_ano.setSingleStep(1)
 
         # ==========================================
         # Título

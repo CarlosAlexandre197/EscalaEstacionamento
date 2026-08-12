@@ -148,40 +148,6 @@ QSpinBox {
     border-radius: 5px;
     padding: 6px;
 }
-
-QSpinBox:focus {
-    border: 1px solid #2196F3;
-}
-
-QSpinBox::up-button,
-QSpinBox::down-button {
-    width: 20px;
-    background-color: #F5F5F5;
-    border: none;
-}
-
-QSpinBox::up-button:hover,
-QSpinBox::down-button:hover {
-    background-color: #E0E0E0;
-}
-
-QSpinBox::up-arrow {
-    width: 8px;
-    height: 8px;
-    image: none;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-bottom: 5px solid #555555;
-}
-
-QSpinBox::down-arrow {
-    width: 8px;
-    height: 8px;
-    image: none;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 5px solid #555555;
-}
 """
 
 # ==========================================
