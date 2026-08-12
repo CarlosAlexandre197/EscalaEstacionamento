@@ -109,25 +109,36 @@ class CadastroObreiros(QDialog):
         
     def carregar_obreiros(self):
 
+        # Limpa completamente a tabela
+        self.tabela_obreiros.clearContents()
         self.tabela_obreiros.setRowCount(0)
 
+        # Busca os dados atualizados no banco
         obreiros = self.banco.listar_obreiros()
 
+        # Preenche novamente a tabela
         for linha, (id_obreiro, nome) in enumerate(obreiros):
 
             self.tabela_obreiros.insertRow(linha)
 
+            item_id = QTableWidgetItem(str(id_obreiro))
+            item_nome = QTableWidgetItem(nome)
+
             self.tabela_obreiros.setItem(
                 linha,
                 0,
-                QTableWidgetItem(str(id_obreiro))
+                item_id
             )
 
             self.tabela_obreiros.setItem(
                 linha,
                 1,
-                QTableWidgetItem(nome)
+                item_nome
             )
+
+        # Garante que a interface seja redesenhada
+        self.tabela_obreiros.viewport().update()
+        self.tabela_obreiros.update()
             
     def atualizar_obreiros(self):
 

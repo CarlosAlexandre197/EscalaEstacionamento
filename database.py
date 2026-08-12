@@ -77,7 +77,11 @@ class Banco:
             "SELECT id, nome FROM obreiros ORDER BY nome"
         )
 
-        return self.cursor.fetchall()
+        obreiros = self.cursor.fetchall()
+
+        print("OBREIROS ENCONTRADOS NO BANCO:", obreiros)
+
+        return obreiros
 
     def editar_obreiro(self, id, nome):
 
