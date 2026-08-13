@@ -7,29 +7,60 @@ class Banco:
 
     def __init__(self):
 
-        # Pasta onde está o projeto
-        pasta_projeto = os.path.dirname(
-            os.path.abspath(__file__)
-        )
+        # Quando estiver rodando pelo Python:
+        # usa a pasta onde está o database.py
+        #
+        # Quando estiver rodando pelo .exe:
+        # usa a pasta onde está o EscalaEstacionamento.exe
 
-        # Pasta do banco dentro do projeto
+        if getattr(sys, "frozen", False):
+            pasta_programa = os.path.dirname(
+                sys.executable
+            )
+        else:
+            pasta_programa = os.path.dirname(
+                os.path.abspath(__file__)
+            )
+
+        # Se o .exe estiver dentro de dist,
+        # volta uma pasta para chegar à pasta do projeto
+        if os.path.basename(pasta_programa).lower() == "dist":
+
+            pasta_projeto = os.path.dirname(
+                pasta_programa
+            )
+
+        else:
+
+            pasta_projeto = pasta_programa
+
+        # Pasta do banco
         pasta_banco = os.path.join(
             pasta_projeto,
             "banco"
         )
 
-        # Cria a pasta caso não exista
-        os.makedirs(pasta_banco, exist_ok=True)
+        # Garante que a pasta exista
+        os.makedirs(
+            pasta_banco,
+            exist_ok=True
+        )
 
-        # Caminho do banco
+        # Arquivo do banco
         caminho_banco = os.path.join(
             pasta_banco,
             "sistema_escalas.db"
         )
 
-        print("BANCO USADO PELO PROGRAMA:", caminho_banco)
+        print(
+            "BANCO USADO PELO PROGRAMA:",
+            caminho_banco
+        )
 
-        self.conexao = sqlite3.connect(caminho_banco)
+        self.conexao = sqlite3.connect(
+            caminho_banco
+        )
+
         self.cursor = self.conexao.cursor()
 
         self.criar_tabelas()
